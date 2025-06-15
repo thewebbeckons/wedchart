@@ -17,5 +17,8 @@
     "nuxt": "^3.13.0",
     "pinia": "^2.2.4",
     "qrcode": "^1.5.3"
+  },
+  "devDependencies": {
+    "@iconify-json/simple-icons": "^1.2.38"
   }
 }
