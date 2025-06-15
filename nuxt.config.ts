@@ -19,5 +19,16 @@ export default defineNuxtConfig({
       supabaseUrl: process.env.VITE_SUPABASE_URL,
       supabaseAnonKey: process.env.VITE_SUPABASE_ANON_KEY,
     }
+  },
+  app: {
+    head: {
+      script: [
+        {
+          async: true,
+          src: 'https://analytics.umami.is/script.js',
+          'data-website-id': 'your-website-id-here'
+        }
+      ]
+    }
   }
 })
