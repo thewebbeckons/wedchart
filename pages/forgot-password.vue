@@ -45,6 +45,17 @@
               Send reset link
             </UButton>
           </form>
+
+          <!-- Error Display -->
+          <UAlert
+            v-if="error"
+            :title="error"
+            color="red"
+            variant="soft"
+            class="mt-4"
+            :close-button="{ icon: 'i-heroicons-x-mark-20-solid', color: 'red', variant: 'soft' }"
+            @close="error = ''"
+          />
         </div>
 
         <div v-else class="text-center">
@@ -55,14 +66,27 @@
           <p class="mt-2 text-sm text-gray-600">
             We've sent a password reset link to <strong>{{ email }}</strong>
           </p>
-          <div class="mt-6">
+          <p class="mt-2 text-xs text-gray-500">
+            If you don't see the email, check your spam folder.
+          </p>
+          <div class="mt-6 space-y-3">
             <UButton
               @click="emailSent = false"
               variant="soft"
               color="gray"
               size="sm"
+              block
             >
               Try another email
+            </UButton>
+            <UButton
+              @click="$router.push('/login')"
+              variant="soft"
+              color="pink"
+              size="sm"
+              block
+            >
+              Back to sign in
             </UButton>
           </div>
         </div>
@@ -86,6 +110,9 @@ const loading = ref(false)
 const emailSent = ref(false)
 const error = ref('')
 
+// Get Supabase client
+const { $supabase } = useNuxtApp()
+
 // Methods
 const handleResetRequest = async () => {
   if (!email.value) return
@@ -94,18 +121,37 @@ const handleResetRequest = async () => {
     loading.value = true
     error.value = ''
 
-    // Validate email
+    // Validate email format
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
       error.value = 'Please enter a valid email address'
       return
     }
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    // Send password reset email using Supabase
+    const { error: resetError } = await $supabase.auth.resetPasswordForEmail(email.value, {
+      redirectTo: `${window.location.origin}/reset-password`
+    })
+
+    if (resetError) {
+      throw resetError
+    }
 
     emailSent.value = true
-  } catch (err) {
-    error.value = 'Failed to send reset email. Please try again.'
+  } catch (err: any) {
+    console.error('Password reset error:', err)
+    
+    // Handle specific Supabase errors
+    if (err.message?.includes('rate limit')) {
+      error.value = 'Too many requests. Please wait a moment before trying again.'
+    } else if (err.message?.includes('invalid email')) {
+      error.value = 'Please enter a valid email address.'
+    } else if (err.message?.includes('not found')) {
+      // For security reasons, we don't want to reveal if an email exists or not
+      // So we'll show success even if the email doesn't exist
+      emailSent.value = true
+    } else {
+      error.value = err.message || 'Failed to send reset email. Please try again.'
+    }
   } finally {
     loading.value = false
   }
