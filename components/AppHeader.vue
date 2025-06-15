@@ -27,6 +27,7 @@
             variant="soft"
             color="pink"
             icon="i-heroicons-share"
+            data-umami-event="share_list"
             class="hidden sm:flex"
           >
             Share List
