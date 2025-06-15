@@ -75,8 +75,7 @@
         </div>
       </main>
 
-      <!-- Footer -->
-      <AppFooter />
+      
 
       <!-- Share List Modal -->
       <ShareListModal v-model="showShareModal" />
@@ -84,6 +83,8 @@
       <!-- Notifications -->
       <UNotifications />
     </div>
+    <!-- Footer -->
+      <AppFooter />
   </AuthCheck>
 </template>
 
