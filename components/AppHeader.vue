@@ -1,6 +1,6 @@
 <template>
   <header class="bg-white shadow-sm border-b border-gray-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <UContainer>
       <div class="flex justify-between items-center py-6">
         <!-- Logo and Title -->
         <div>
@@ -78,7 +78,7 @@
           </UButton>
         </div>
       </div>
-    </div>
+    </UContainer>
   </header>
 </template>
 

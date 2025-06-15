@@ -5,75 +5,80 @@
       <AppHeader page="dashboard" @share-list="showShareModal = true" />
 
       <!-- Main Content -->
-      <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="space-y-8">
-          <!-- Wedding Header Section -->
-          <div class="text-center">
-            <h2 class="text-4xl font-bold text-gray-900 mb-2">
-              {{ weddingDisplayName }}
-            </h2>
-            <p class="text-lg text-gray-600">
-              {{ weddingCountdownMessage }}
-            </p>
-          </div>
+      <main class="flex-1 py-8">
+        <UContainer>
+          <div class="space-y-8">
+            <!-- Wedding Header Section -->
+            <div class="text-center">
+              <h2 class="text-4xl font-bold text-gray-900 mb-2">
+                {{ weddingDisplayName }}
+              </h2>
+              <p class="text-lg text-gray-600">
+                {{ weddingCountdownMessage }}
+              </p>
+            </div>
 
-          <!-- Stats Cards -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <UIcon name="i-heroicons-users" class="h-8 w-8 text-blue-600" />
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0">
+                    <UIcon name="i-heroicons-users" class="h-8 w-8 text-blue-600" />
+                  </div>
+                  <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-600">Total Guests</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ totalGuests }}</p>
+                  </div>
                 </div>
-                <div class="ml-4">
-                  <p class="text-sm font-medium text-gray-600">Total Guests</p>
-                  <p class="text-2xl font-bold text-gray-900">{{ totalGuests }}</p>
+              </div>
+
+              <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0">
+                    <UIcon name="i-heroicons-table-cells" class="h-8 w-8 text-green-600" />
+                  </div>
+                  <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-600">Total Tables</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ totalTables }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0">
+                    <UIcon name="i-heroicons-check-circle" class="h-8 w-8 text-emerald-600" />
+                  </div>
+                  <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-600">Assigned</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ assignedGuests }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0">
+                    <UIcon name="i-heroicons-exclamation-circle" class="h-8 w-8 text-amber-600" />
+                  </div>
+                  <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-600">Unassigned</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ unassignedGuests }}</p>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <UIcon name="i-heroicons-table-cells" class="h-8 w-8 text-green-600" />
-                </div>
-                <div class="ml-4">
-                  <p class="text-sm font-medium text-gray-600">Total Tables</p>
-                  <p class="text-2xl font-bold text-gray-900">{{ totalTables }}</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <UIcon name="i-heroicons-check-circle" class="h-8 w-8 text-emerald-600" />
-                </div>
-                <div class="ml-4">
-                  <p class="text-sm font-medium text-gray-600">Assigned</p>
-                  <p class="text-2xl font-bold text-gray-900">{{ assignedGuests }}</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <UIcon name="i-heroicons-exclamation-circle" class="h-8 w-8 text-amber-600" />
-                </div>
-                <div class="ml-4">
-                  <p class="text-sm font-medium text-gray-600">Unassigned</p>
-                  <p class="text-2xl font-bold text-gray-900">{{ unassignedGuests }}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Guest Management Table -->
-          <Transition name="slide-up" appear>
-            <GuestTable />
-          </Transition>
-        </div>        
+            <!-- Guest Management Table -->
+            <Transition name="slide-up" appear>
+              <GuestTable />
+            </Transition>
+          </div>        
+        </UContainer>
       </main>
+
+      <!-- Footer -->
+      <AppFooter />
 
       <!-- Share List Modal -->
       <ShareListModal v-model="showShareModal" />

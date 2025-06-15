@@ -4,194 +4,199 @@
     <AppHeader page="account" />
 
     <!-- Main Content -->
-    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div class="space-y-8">
-        <!-- Page Header -->
-        <div>
-          <h2 class="text-3xl font-bold text-gray-900">Account Settings</h2>
-          <p class="text-gray-600 mt-1">Manage your account information and preferences</p>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <!-- Navigation Sidebar -->
-          <div class="lg:col-span-1">
-            <nav class="space-y-1">
-              <button
-                v-for="tab in tabs"
-                :key="tab.id"
-                @click="activeTab = tab.id"
-                :class="{
-                  'bg-pink-50 border-pink-500 text-pink-700': activeTab === tab.id,
-                  'border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900': activeTab !== tab.id
-                }"
-                class="group border-l-4 px-3 py-2 flex items-center text-sm font-medium w-full text-left"
-              >
-                <UIcon :name="tab.icon" class="flex-shrink-0 -ml-1 mr-3 h-6 w-6" />
-                <span class="truncate">{{ tab.name }}</span>
-              </button>
-            </nav>
+    <main class="flex-1 py-8">
+      <UContainer>
+        <div class="space-y-8">
+          <!-- Page Header -->
+          <div>
+            <h2 class="text-3xl font-bold text-gray-900">Account Settings</h2>
+            <p class="text-gray-600 mt-1">Manage your account information and preferences</p>
           </div>
 
-          <!-- Content Area -->
-          <div class="lg:col-span-2">
-            <!-- Profile Information -->
-            <div v-if="activeTab === 'profile'" class="bg-white shadow-sm rounded-lg">
-              <div class="px-6 py-4 border-b border-gray-200">
-                <h3 class="text-lg font-medium text-gray-900">Profile Information</h3>
-                <p class="text-sm text-gray-600 mt-1">Update your personal details and wedding information</p>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Navigation Sidebar -->
+            <div class="lg:col-span-1">
+              <nav class="space-y-1">
+                <button
+                  v-for="tab in tabs"
+                  :key="tab.id"
+                  @click="activeTab = tab.id"
+                  :class="{
+                    'bg-pink-50 border-pink-500 text-pink-700': activeTab === tab.id,
+                    'border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900': activeTab !== tab.id
+                  }"
+                  class="group border-l-4 px-3 py-2 flex items-center text-sm font-medium w-full text-left"
+                >
+                  <UIcon :name="tab.icon" class="flex-shrink-0 -ml-1 mr-3 h-6 w-6" />
+                  <span class="truncate">{{ tab.name }}</span>
+                </button>
+              </nav>
+            </div>
+
+            <!-- Content Area -->
+            <div class="lg:col-span-2">
+              <!-- Profile Information -->
+              <div v-if="activeTab === 'profile'" class="bg-white shadow-sm rounded-lg">
+                <div class="px-6 py-4 border-b border-gray-200">
+                  <h3 class="text-lg font-medium text-gray-900">Profile Information</h3>
+                  <p class="text-sm text-gray-600 mt-1">Update your personal details and wedding information</p>
+                </div>
+                
+                <form @submit.prevent="updateProfile" class="px-6 py-4 space-y-6">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <UFormGroup label="Full Name" required>
+                      <UInput
+                        v-model="profileForm.full_name"
+                        placeholder="Enter your full name"
+                        :error="profileErrors.full_name"
+                        required
+                      />
+                    </UFormGroup>
+
+                    <UFormGroup label="Email Address" required>
+                      <UInput
+                        v-model="profileForm.email"
+                        type="email"
+                        placeholder="Enter your email"
+                        :error="profileErrors.email"
+                        required
+                        disabled
+                      />
+                      <template #help>
+                        <span class="text-xs text-gray-500">Email cannot be changed after registration</span>
+                      </template>
+                    </UFormGroup>
+
+                    <UFormGroup label="Wedding Name" help="e.g., 'Sarah & John's Wedding'">
+                      <UInput
+                        v-model="profileForm.wedding_name"
+                        placeholder="Enter your wedding name"
+                      />
+                    </UFormGroup>
+
+                    <UFormGroup label="Wedding Date">
+                      <UInput
+                        v-model="profileForm.wedding_date"
+                        type="date"
+                        placeholder="Select wedding date"
+                      />
+                    </UFormGroup>
+                  </div>
+
+                  <div class="flex justify-end">
+                    <UButton
+                      type="submit"
+                      :loading="authStore.loading"
+                    >
+                      Save Changes
+                    </UButton>
+                  </div>
+                </form>
               </div>
-              
-              <form @submit.prevent="updateProfile" class="px-6 py-4 space-y-6">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <UFormGroup label="Full Name" required>
+
+              <!-- Security Settings -->
+              <div v-else-if="activeTab === 'security'" class="bg-white shadow-sm rounded-lg">
+                <div class="px-6 py-4 border-b border-gray-200">
+                  <h3 class="text-lg font-medium text-gray-900">Security Settings</h3>
+                  <p class="text-sm text-gray-600 mt-1">Manage your password and security preferences</p>
+                </div>
+                
+                <form @submit.prevent="changePassword" class="px-6 py-4 space-y-6">
+                  <UFormGroup label="Current Password" required>
                     <UInput
-                      v-model="profileForm.full_name"
-                      placeholder="Enter your full name"
-                      :error="profileErrors.full_name"
+                      v-model="passwordForm.currentPassword"
+                      type="password"
+                      placeholder="Enter current password"
+                      :error="passwordErrors.currentPassword"
                       required
                     />
                   </UFormGroup>
 
-                  <UFormGroup label="Email Address" required>
+                  <UFormGroup label="New Password" required>
                     <UInput
-                      v-model="profileForm.email"
-                      type="email"
-                      placeholder="Enter your email"
-                      :error="profileErrors.email"
+                      v-model="passwordForm.newPassword"
+                      type="password"
+                      placeholder="Enter new password"
+                      :error="passwordErrors.newPassword"
                       required
-                      disabled
                     />
-                    <template #help>
-                      <span class="text-xs text-gray-500">Email cannot be changed after registration</span>
-                    </template>
                   </UFormGroup>
 
-                  <UFormGroup label="Wedding Name" help="e.g., 'Sarah & John's Wedding'">
+                  <UFormGroup label="Confirm New Password" required>
                     <UInput
-                      v-model="profileForm.wedding_name"
-                      placeholder="Enter your wedding name"
+                      v-model="passwordForm.confirmPassword"
+                      type="password"
+                      placeholder="Confirm new password"
+                      :error="passwordErrors.confirmPassword"
+                      required
                     />
                   </UFormGroup>
 
-                  <UFormGroup label="Wedding Date">
-                    <UInput
-                      v-model="profileForm.wedding_date"
-                      type="date"
-                      placeholder="Select wedding date"
-                    />
-                  </UFormGroup>
-                </div>
-
-                <div class="flex justify-end">
-                  <UButton
-                    type="submit"
-                    :loading="authStore.loading"
-                  >
-                    Save Changes
-                  </UButton>
-                </div>
-              </form>
-            </div>
-
-            <!-- Security Settings -->
-            <div v-else-if="activeTab === 'security'" class="bg-white shadow-sm rounded-lg">
-              <div class="px-6 py-4 border-b border-gray-200">
-                <h3 class="text-lg font-medium text-gray-900">Security Settings</h3>
-                <p class="text-sm text-gray-600 mt-1">Manage your password and security preferences</p>
-              </div>
-              
-              <form @submit.prevent="changePassword" class="px-6 py-4 space-y-6">
-                <UFormGroup label="Current Password" required>
-                  <UInput
-                    v-model="passwordForm.currentPassword"
-                    type="password"
-                    placeholder="Enter current password"
-                    :error="passwordErrors.currentPassword"
-                    required
-                  />
-                </UFormGroup>
-
-                <UFormGroup label="New Password" required>
-                  <UInput
-                    v-model="passwordForm.newPassword"
-                    type="password"
-                    placeholder="Enter new password"
-                    :error="passwordErrors.newPassword"
-                    required
-                  />
-                </UFormGroup>
-
-                <UFormGroup label="Confirm New Password" required>
-                  <UInput
-                    v-model="passwordForm.confirmPassword"
-                    type="password"
-                    placeholder="Confirm new password"
-                    :error="passwordErrors.confirmPassword"
-                    required
-                  />
-                </UFormGroup>
-
-                <div class="flex justify-end">
-                  <UButton
-                    type="submit"
-                    :loading="authStore.loading"
-                  >
-                    Update Password
-                  </UButton>
-                </div>
-              </form>
-            </div>
-
-            <!-- Privacy Settings -->
-            <div v-else-if="activeTab === 'privacy'" class="bg-white shadow-sm rounded-lg">
-              <div class="px-6 py-4 border-b border-gray-200">
-                <h3 class="text-lg font-medium text-gray-900">Privacy Settings</h3>
-                <p class="text-sm text-gray-600 mt-1">Control your privacy and data sharing preferences</p>
-              </div>
-              
-              <div class="px-6 py-4 space-y-6">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <h4 class="text-sm font-medium text-gray-900">Email Notifications</h4>
-                    <p class="text-sm text-gray-600">Receive email updates about your account</p>
-                  </div>
-                  <UToggle v-model="privacySettings.emailNotifications" />
-                </div>
-
-                <div class="flex items-center justify-between">
-                  <div>
-                    <h4 class="text-sm font-medium text-gray-900">Marketing Communications</h4>
-                    <p class="text-sm text-gray-600">Receive promotional emails and updates</p>
-                  </div>
-                  <UToggle v-model="privacySettings.marketingEmails" />
-                </div>
-
-                <div class="border-t border-gray-200 pt-6">
-                  <h4 class="text-md font-medium text-gray-900 mb-4">Data Management</h4>
-                  <div class="space-x-3">
-                    <UButton variant="soft" color="blue" size="sm">
-                      Download My Data
-                    </UButton>
-                    <UButton variant="soft" color="red" size="sm">
-                      Delete Account
+                  <div class="flex justify-end">
+                    <UButton
+                      type="submit"
+                      :loading="authStore.loading"
+                    >
+                      Update Password
                     </UButton>
                   </div>
-                </div>
+                </form>
+              </div>
 
-                <div class="flex justify-end">
-                  <UButton
-                    @click="savePrivacySettings"
-                    :loading="privacyLoading"
-                  >
-                    Save Preferences
-                  </UButton>
+              <!-- Privacy Settings -->
+              <div v-else-if="activeTab === 'privacy'" class="bg-white shadow-sm rounded-lg">
+                <div class="px-6 py-4 border-b border-gray-200">
+                  <h3 class="text-lg font-medium text-gray-900">Privacy Settings</h3>
+                  <p class="text-sm text-gray-600 mt-1">Control your privacy and data sharing preferences</p>
+                </div>
+                
+                <div class="px-6 py-4 space-y-6">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <h4 class="text-sm font-medium text-gray-900">Email Notifications</h4>
+                      <p class="text-sm text-gray-600">Receive email updates about your account</p>
+                    </div>
+                    <UToggle v-model="privacySettings.emailNotifications" />
+                  </div>
+
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <h4 class="text-sm font-medium text-gray-900">Marketing Communications</h4>
+                      <p class="text-sm text-gray-600">Receive promotional emails and updates</p>
+                    </div>
+                    <UToggle v-model="privacySettings.marketingEmails" />
+                  </div>
+
+                  <div class="border-t border-gray-200 pt-6">
+                    <h4 class="text-md font-medium text-gray-900 mb-4">Data Management</h4>
+                    <div class="space-x-3">
+                      <UButton variant="soft" color="blue" size="sm">
+                        Download My Data
+                      </UButton>
+                      <UButton variant="soft" color="red" size="sm">
+                        Delete Account
+                      </UButton>
+                    </div>
+                  </div>
+
+                  <div class="flex justify-end">
+                    <UButton
+                      @click="savePrivacySettings"
+                      :loading="privacyLoading"
+                    >
+                      Save Preferences
+                    </UButton>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </UContainer>
     </main>
+
+    <!-- Footer -->
+    <AppFooter />
 
     <!-- Notifications -->
     <UNotifications />
