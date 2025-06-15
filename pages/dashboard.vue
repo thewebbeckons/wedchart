@@ -72,8 +72,7 @@
           <Transition name="slide-up" appear>
             <GuestTable />
           </Transition>
-        </div>
-        
+        </div>        
       </main>
 
       <!-- Share List Modal -->
