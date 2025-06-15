@@ -102,13 +102,22 @@ const weddingStore = useWeddingStore()
 // Reactive data
 const showShareModal = ref(false)
 
-// Computed
-const { guests, tables } = storeToRefs(weddingStore)
+// Computed - with safe fallbacks
+const totalGuests = computed(() => {
+  return weddingStore.guests?.length || 0
+})
 
-const totalGuests = computed(() => guests.value.length)
-const totalTables = computed(() => tables.value.length)
-const assignedGuests = computed(() => guests.value.filter(g => g.tableId).length)
-const unassignedGuests = computed(() => guests.value.filter(g => !g.tableId).length)
+const totalTables = computed(() => {
+  return weddingStore.tables?.length || 0
+})
+
+const assignedGuests = computed(() => {
+  return weddingStore.guests?.filter(g => g.tableId)?.length || 0
+})
+
+const unassignedGuests = computed(() => {
+  return weddingStore.guests?.filter(g => !g.tableId)?.length || 0
+})
 
 const weddingDisplayName = computed(() => {
   if (authStore.profile?.wedding_name) {
