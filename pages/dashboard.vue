@@ -84,7 +84,7 @@
       <UNotifications />
     </div>
     <!-- Footer -->
-      <AppFooter />
+    <AppFooter />
   </AuthCheck>
 </template>
 
