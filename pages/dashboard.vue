@@ -81,11 +81,7 @@
 
       <!-- Notifications -->
       <UNotifications />
-    </div>
-    <div class="space-y-4 flex flex-row justify-between items-center text-gray-400">
-          <p>© 2024 WedChart. Made with ❤️ for couples planning their perfect day.</p>
-          <NuxtLink to="coff.ee/667z79qdqdp" target="_blank">Buy me a Coffee</NuxtLink>
-        </div>
+    </div>    
   </AuthCheck>
 </template>
 
