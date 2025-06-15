@@ -17,7 +17,7 @@
             data-umami-event="buy_me_coffee"
           >
             <!-- Coffee Cup SVG Icon -->
-            <UIcon name="i-simple-icons-buymeacoffee" class="w-4 h-4" />
+            <UIcon name="i-simple-icons-buymeacoffee" class="w-4 h-4 mr-1" />
             <span class="hidden sm:inline">Buy me a coffee</span>
             <span class="sm:hidden">☕</span>
           </a>
