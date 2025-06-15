@@ -1,0 +1,21 @@
+{
+  "name": "wedding-seating-chart",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "HOST=0.0.0.0 nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxt/ui": "^2.18.7",
+    "@pinia/nuxt": "^0.5.5",
+    "@supabase/supabase-js": "^2.39.0",
+    "@vueuse/nuxt": "^11.1.0",
+    "nuxt": "^3.13.0",
+    "pinia": "^2.2.4",
+    "qrcode": "^1.5.3"
+  }
+}
