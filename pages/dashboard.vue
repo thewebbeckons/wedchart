@@ -1,11 +1,11 @@
 <template>
   <AuthCheck>
-    <div class="min-h-screen bg-gray-50">
+    <div class="min-h-screen bg-gray-50 flex flex-col">
       <!-- Header -->
       <AppHeader page="dashboard" @share-list="showShareModal = true" />
 
       <!-- Main Content -->
-      <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="space-y-8">
           <!-- Wedding Header Section -->
           <div class="text-center">
@@ -74,6 +74,9 @@
           </Transition>
         </div>
       </main>
+
+      <!-- Footer -->
+      <AppFooter />
 
       <!-- Share List Modal -->
       <ShareListModal v-model="showShareModal" />
