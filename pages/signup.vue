@@ -331,7 +331,7 @@ const handleSignup = async () => {
   )
   
   if (result.success) {
-    await navigateTo('/')
+    await navigateTo('/dashboard')
   }
 }
 

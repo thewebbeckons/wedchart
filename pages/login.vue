@@ -152,7 +152,7 @@ const handleLogin = async () => {
   const result = await authStore.signIn(form.value.email, form.value.password)
   
   if (result.success) {
-    await navigateTo('/')
+    await navigateTo('/dashboard')
   }
 }
 
