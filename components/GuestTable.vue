@@ -71,7 +71,7 @@
           <USelect
             v-model="selectedTableFilter"
             :options="tableFilterOptions"
-            placeholder="All tables"
+            placeholder="Select a table"
             size="sm"
             class="w-full"
           />
@@ -83,7 +83,7 @@
           <USelect
             v-model="selectedStatusFilter"
             :options="statusFilterOptions"
-            placeholder="All statuses"
+            placeholder="Select a status"
             size="sm"
             class="w-full"
           />
@@ -403,7 +403,7 @@ const statusOptions = [
   { label: 'Declined', value: 'declined' }
 ]
 
-// Filter options
+// Filter options - removed "All" options
 const tableFilterOptions = computed(() => {
   const uniqueTables = new Set<string>()
   guestsWithTableNames.value.forEach(guest => {
@@ -413,7 +413,6 @@ const tableFilterOptions = computed(() => {
   })
   
   const options = [
-    { label: 'All Tables', value: null },
     { label: 'Unassigned', value: 'unassigned' }
   ]
   
@@ -431,7 +430,6 @@ const tableFilterOptions = computed(() => {
 })
 
 const statusFilterOptions = computed(() => [
-  { label: 'All Statuses', value: null },
   { label: 'Pending', value: 'pending' },
   { label: 'Confirmed', value: 'confirmed' },
   { label: 'Declined', value: 'declined' }
