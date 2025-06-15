@@ -21,6 +21,7 @@
             <UButton
               @click="$router.push('/signup')"
               size="sm"
+              data-umami-event="get_started_header"
             >
               Get Started
             </UButton>
