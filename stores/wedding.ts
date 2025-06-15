@@ -13,6 +13,9 @@ export const useWeddingStore = defineStore('wedding', () => {
 
   // Computed
   const guestsWithTableNames = computed(() => {
+    if (!guests.value || !Array.isArray(guests.value)) return []
+    if (!tables.value || !Array.isArray(tables.value)) return []
+    
     return guests.value.map(guest => ({
       ...guest,
       tableName: guest.tableId ? tables.value.find(t => t.id === guest.tableId)?.name || 'Unknown' : 'Unassigned'
@@ -20,6 +23,8 @@ export const useWeddingStore = defineStore('wedding', () => {
   })
 
   const tableOptions = computed(() => {
+    if (!tables.value || !Array.isArray(tables.value)) return [{ label: 'Unassigned', value: null }]
+    
     return [
       { label: 'Unassigned', value: null },
       ...tables.value.map(table => ({
@@ -30,6 +35,9 @@ export const useWeddingStore = defineStore('wedding', () => {
   })
 
   const confirmedGuestsWithTables = computed(() => {
+    if (!guests.value || !Array.isArray(guests.value)) return []
+    if (!tables.value || !Array.isArray(tables.value)) return []
+    
     console.log('Computing confirmed guests with tables...')
     console.log('All guests:', guests.value)
     console.log('All tables:', tables.value)
@@ -315,6 +323,8 @@ export const useWeddingStore = defineStore('wedding', () => {
   }
 
   const checkDuplicateGuest = (name: string, excludeId?: string): boolean => {
+    if (!guests.value || !Array.isArray(guests.value)) return false
+    
     return guests.value.some(guest => 
       guest.name.toLowerCase().trim() === name.toLowerCase().trim() && 
       guest.id !== excludeId
@@ -445,6 +455,7 @@ export const useWeddingStore = defineStore('wedding', () => {
         updatedAt: new Date(data.updated_at)
       }
       
+      if (!guests.value) guests.value = []
       guests.value.unshift(newGuest)
       return true
     } catch (err: any) {
@@ -488,15 +499,17 @@ export const useWeddingStore = defineStore('wedding', () => {
       if (updateError) throw updateError
 
       // Update local state
-      const index = guests.value.findIndex(g => g.id === id)
-      if (index !== -1) {
-        guests.value[index] = {
-          id: data.id,
-          name: data.name,
-          tableId: data.table_id,
-          status: data.status as 'confirmed' | 'pending' | 'declined' | undefined,
-          createdAt: new Date(data.created_at),
-          updatedAt: new Date(data.updated_at)
+      if (guests.value && Array.isArray(guests.value)) {
+        const index = guests.value.findIndex(g => g.id === id)
+        if (index !== -1) {
+          guests.value[index] = {
+            id: data.id,
+            name: data.name,
+            tableId: data.table_id,
+            status: data.status as 'confirmed' | 'pending' | 'declined' | undefined,
+            createdAt: new Date(data.created_at),
+            updatedAt: new Date(data.updated_at)
+          }
         }
       }
 
@@ -523,9 +536,11 @@ export const useWeddingStore = defineStore('wedding', () => {
       if (deleteError) throw deleteError
 
       // Remove from local state
-      const index = guests.value.findIndex(g => g.id === id)
-      if (index !== -1) {
-        guests.value.splice(index, 1)
+      if (guests.value && Array.isArray(guests.value)) {
+        const index = guests.value.findIndex(g => g.id === id)
+        if (index !== -1) {
+          guests.value.splice(index, 1)
+        }
       }
 
       return true
@@ -555,13 +570,15 @@ export const useWeddingStore = defineStore('wedding', () => {
       }
 
       // Check for duplicate table names
-      const exists = tables.value.some(t => 
-        t.name.toLowerCase() === tableData.name.trim().toLowerCase()
-      )
-      
-      if (exists) {
-        error.value = 'A table with this name already exists'
-        return false
+      if (tables.value && Array.isArray(tables.value)) {
+        const exists = tables.value.some(t => 
+          t.name.toLowerCase() === tableData.name.trim().toLowerCase()
+        )
+        
+        if (exists) {
+          error.value = 'A table with this name already exists'
+          return false
+        }
       }
 
       const { data, error: insertError } = await $supabase
@@ -589,6 +606,7 @@ export const useWeddingStore = defineStore('wedding', () => {
         updatedAt: new Date(data.updated_at)
       }
       
+      if (!tables.value) tables.value = []
       tables.value.unshift(newTable)
       return true
     } catch (err: any) {
@@ -606,10 +624,12 @@ export const useWeddingStore = defineStore('wedding', () => {
       error.value = null
 
       // Check if any guests are assigned to this table
-      const hasGuests = guests.value.some(g => g.tableId === id)
-      if (hasGuests) {
-        error.value = 'Cannot delete table with assigned guests. Please reassign guests first.'
-        return false
+      if (guests.value && Array.isArray(guests.value)) {
+        const hasGuests = guests.value.some(g => g.tableId === id)
+        if (hasGuests) {
+          error.value = 'Cannot delete table with assigned guests. Please reassign guests first.'
+          return false
+        }
       }
 
       const { error: deleteError } = await $supabase
@@ -620,9 +640,11 @@ export const useWeddingStore = defineStore('wedding', () => {
       if (deleteError) throw deleteError
 
       // Remove from local state
-      const index = tables.value.findIndex(t => t.id === id)
-      if (index !== -1) {
-        tables.value.splice(index, 1)
+      if (tables.value && Array.isArray(tables.value)) {
+        const index = tables.value.findIndex(t => t.id === id)
+        if (index !== -1) {
+          tables.value.splice(index, 1)
+        }
       }
 
       return true
@@ -705,7 +727,7 @@ export const useWeddingStore = defineStore('wedding', () => {
 
         try {
           // Find or create table
-          let table = tables.value.find(t => 
+          let table = tables.value?.find(t => 
             t.name.toLowerCase() === row.tableName.toLowerCase()
           )
           
@@ -730,6 +752,7 @@ export const useWeddingStore = defineStore('wedding', () => {
               updatedAt: new Date(tableData.updated_at)
             }
             
+            if (!tables.value) tables.value = []
             tables.value.push(table)
           }
 
@@ -756,6 +779,7 @@ export const useWeddingStore = defineStore('wedding', () => {
             updatedAt: new Date(guestData.updated_at)
           }
           
+          if (!guests.value) guests.value = []
           guests.value.push(newGuest)
           result.success++
           
@@ -793,6 +817,8 @@ export const useWeddingStore = defineStore('wedding', () => {
         },
         (payload) => {
           console.log('Guest change received:', payload)
+          
+          if (!guests.value) guests.value = []
           
           if (payload.eventType === 'INSERT') {
             const newGuest: Guest = {
@@ -838,6 +864,8 @@ export const useWeddingStore = defineStore('wedding', () => {
         },
         (payload) => {
           console.log('Table change received:', payload)
+          
+          if (!tables.value) tables.value = []
           
           if (payload.eventType === 'INSERT') {
             const newTable: Table = {
@@ -897,6 +925,10 @@ export const useWeddingStore = defineStore('wedding', () => {
       }
 
       console.log('Initializing wedding data...')
+
+      // Initialize arrays if they don't exist
+      if (!guests.value) guests.value = []
+      if (!tables.value) tables.value = []
 
       // Fetch initial data
       await Promise.all([
