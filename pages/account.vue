@@ -1,26 +1,7 @@
 <template>
   <div class="min-h-screen bg-gray-50">
     <!-- Header -->
-    <header class="bg-white shadow-sm border-b border-gray-200">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center py-6">
-          <div class="flex items-center">
-            <NuxtLink to="/" class="flex items-center">
-              <UIcon name="i-heroicons-heart" class="h-8 w-8 text-pink-500 mr-3" />
-              <h1 class="text-2xl font-bold text-gray-900">WedChart</h1>
-            </NuxtLink>
-          </div>
-          <UButton
-            @click="handleLogout"
-            variant="soft"
-            color="red"
-            icon="i-heroicons-arrow-right-on-rectangle"
-          >
-            Logout
-          </UButton>
-        </div>
-      </div>
-    </header>
+    <AppHeader page="account" />
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -393,13 +374,6 @@ const savePrivacySettings = async () => {
     })
   } finally {
     privacyLoading.value = false
-  }
-}
-
-const handleLogout = async () => {
-  const result = await authStore.signOut()
-  if (result.success) {
-    await navigateTo('/login')
   }
 }
 

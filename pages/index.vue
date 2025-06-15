@@ -2,53 +2,7 @@
   <AuthCheck>
     <div class="min-h-screen bg-gray-50">
       <!-- Header -->
-      <header class="bg-white shadow-sm border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex justify-between items-center py-6">
-            <div>
-              <h1 class="text-3xl font-bold text-gray-900 flex items-center">
-                <UIcon name="i-heroicons-heart" class="h-8 w-8 text-red-500 mr-3" />
-                WedChart
-              </h1>
-            </div>
-            <div class="flex items-center space-x-4">
-              <span v-if="authStore.profile" class="text-sm text-gray-600 hidden sm:block">
-                Welcome, {{ authStore.profile.full_name }}
-              </span>
-              
-              <!-- Share List Button -->
-              <UButton
-                @click="showShareModal = true"
-                variant="soft"
-                color="pink"
-                icon="i-heroicons-share"
-                class="hidden sm:flex"
-              >
-                Share List
-              </UButton>
-              
-              <!-- Mobile Share Button -->
-              <UButton
-                @click="showShareModal = true"
-                variant="soft"
-                color="pink"
-                icon="i-heroicons-share"
-                class="sm:hidden"
-                :ui="{ rounded: 'rounded-full' }"
-              />
-              
-              <UButton
-                @click="$router.push('/account')"
-                variant="soft"
-                color="gray"
-                icon="i-heroicons-user"
-              >
-                <span class="hidden sm:inline">Account</span>
-              </UButton>
-            </div>
-          </div>
-        </div>
-      </header>
+      <AppHeader page="dashboard" @share-list="showShareModal = true" />
 
       <!-- Main Content -->
       <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
