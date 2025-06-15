@@ -4,7 +4,7 @@
       <div class="flex justify-between items-center py-6">
         <!-- Logo and Title -->
         <div>
-          <NuxtLink to="/" class="flex items-center">
+          <NuxtLink :to="logoLink" class="flex items-center">
             <UIcon name="i-heroicons-heart" class="h-8 w-8 text-pink-500 mr-3" />
             <h1 class="text-3xl font-bold text-gray-900">WedChart</h1>
           </NuxtLink>
@@ -46,7 +46,7 @@
           <!-- Dashboard Button (only on account page) -->
           <UButton
             v-if="showDashboardButton"
-            @click="$router.push('/')"
+            @click="$router.push('/dashboard')"
             variant="soft"
             color="gray"
             icon="i-heroicons-squares-2x2"
@@ -101,11 +101,19 @@ const showAccountButton = computed(() => props.page === 'dashboard')
 const showDashboardButton = computed(() => props.page === 'account')
 const showLogoutButton = computed(() => props.page === 'account')
 
+// Logo link - dashboard for authenticated users, home for account page
+const logoLink = computed(() => {
+  if (props.page === 'account') {
+    return '/dashboard'
+  }
+  return '/dashboard'
+})
+
 // Methods
 const handleLogout = async () => {
   const result = await authStore.signOut()
   if (result.success) {
-    await navigateTo('/login')
+    await navigateTo('/')
   }
 }
 </script>
