@@ -27,9 +27,7 @@ export default defineNuxtConfig({
           async: true,
           src: 'https://cloud.umami.is/script.js',
           'data-website-id': 'fcc50e51-e2f6-4d96-b46b-ff106207d2e0',
-          'data-domains': 'wedchart.com,localhost,*.webcontainer-api.io,*.local-credentialless.webcontainer-api.io',
-          'data-auto-track': 'true',
-          'data-do-not-track': 'true'
+          'data-domains': 'wedchart.me,localhost,*.webcontainer-api.io,*.local-credentialless.webcontainer-api.io',
         }
       ]
     }
