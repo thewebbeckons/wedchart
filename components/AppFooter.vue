@@ -2,38 +2,13 @@
   <footer class="bg-white border-t border-gray-200 mt-auto">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-        <!-- Left side - Brand and copyright -->
-        <div class="flex items-center space-x-4">
-          <div class="flex items-center">
-            <UIcon name="i-heroicons-heart" class="h-6 w-6 text-pink-500 mr-2" />
-            <span class="text-lg font-semibold text-gray-900">WedChart</span>
-          </div>
-          <span class="text-sm text-gray-500">
-            © 2024 Made with ❤️ for couples
-          </span>
+        <!-- Left side - Copyright -->
+        <div class="text-sm text-gray-500">
+          © 2024 Made with ❤️ for couples
         </div>
 
-        <!-- Right side - Links and Buy me a coffee -->
-        <div class="flex items-center space-x-6">
-          <!-- Quick Links -->
-          <div class="hidden sm:flex items-center space-x-4 text-sm">
-            <NuxtLink 
-              to="/dashboard" 
-              class="text-gray-600 hover:text-gray-900 transition-colors"
-              :class="{ 'text-pink-600 font-medium': $route.path === '/dashboard' }"
-            >
-              Dashboard
-            </NuxtLink>
-            <NuxtLink 
-              to="/account" 
-              class="text-gray-600 hover:text-gray-900 transition-colors"
-              :class="{ 'text-pink-600 font-medium': $route.path === '/account' }"
-            >
-              Account
-            </NuxtLink>
-          </div>
-
-          <!-- Buy me a coffee button -->
+        <!-- Right side - Buy me a coffee -->
+        <div class="flex items-center">
           <a
             href="https://coff.ee/667z79qdqdp"
             target="_blank"
@@ -41,36 +16,20 @@
             class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-sm font-medium rounded-lg hover:from-yellow-500 hover:to-orange-600 transition-all duration-200 shadow-sm hover:shadow-md transform hover:scale-105"
             data-umami-event="buy_me_coffee"
           >
+            <!-- Coffee Cup SVG Icon -->
             <svg 
               class="w-4 h-4 mr-2" 
               viewBox="0 0 24 24" 
               fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <path d="M2 21h20v-2H2v2zm1.15-4.05L4 15.47l.85 1.48c.2.34.57.55.98.55s.78-.21.98-.55L8 15.47l1.19 1.48c.2.34.57.55.98.55s.78-.21.98-.55L12 15.47l1.19 1.48c.2.34.57.55.98.55s.78-.21.98-.55L16 15.47l1.19 1.48c.2.34.57.55.98.55s.78-.21.98-.55L20 15.47l.85 1.48c.2.34.57.55.98.55s.78-.21.98-.55L23 15.47V9c0-1.1-.9-2-2-2h-1V5c0-1.1-.9-2-2-2H6c-1.1 0-2 .9-2 2v2H3c-1.1 0-2 .9-2 2v6.47l1.15 1.48zM6 5h12v2H6V5zm-1 4h14v4.47l-.85-1.48c-.2-.34-.57-.55-.98-.55s-.78.21-.98.55L15 13.47l-1.19-1.48c-.2-.34-.57-.55-.98-.55s-.78.21-.98.55L11 13.47l-1.19-1.48c-.2-.34-.57-.55-.98-.55s-.78.21-.98.55L7 13.47l-1.19-1.48c-.2-.34-.57-.55-.98-.55s-.78.21-.98.55L5 13.47V9z"/>
+              <path d="M18.5 3H6c-1.1 0-2 .9-2 2v5.71c0 3.83 2.95 7.18 6.78 7.29 3.96.12 7.22-3.06 7.22-7v-1h.5c1.93 0 3.5-1.57 3.5-3.5S20.43 3 18.5 3zM16 5v3h.5c.83 0 1.5-.67 1.5-1.5S17.33 5 16.5 5H16zM6 5h8v8.58c0 2.84-2.16 5.42-5 5.42s-5-2.58-5-5.42V5z"/>
+              <path d="M7 9h6v2H7z"/>
+              <path d="M8 7h4v1H8z"/>
             </svg>
             <span class="hidden sm:inline">Buy me a coffee</span>
             <span class="sm:hidden">☕</span>
           </a>
-        </div>
-      </div>
-
-      <!-- Mobile navigation links -->
-      <div class="sm:hidden mt-4 pt-4 border-t border-gray-200">
-        <div class="flex justify-center space-x-6 text-sm">
-          <NuxtLink 
-            to="/dashboard" 
-            class="text-gray-600 hover:text-gray-900 transition-colors"
-            :class="{ 'text-pink-600 font-medium': $route.path === '/dashboard' }"
-          >
-            Dashboard
-          </NuxtLink>
-          <NuxtLink 
-            to="/account" 
-            class="text-gray-600 hover:text-gray-900 transition-colors"
-            :class="{ 'text-pink-600 font-medium': $route.path === '/account' }"
-          >
-            Account
-          </NuxtLink>
         </div>
       </div>
     </div>
