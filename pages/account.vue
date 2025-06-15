@@ -168,7 +168,7 @@
 
                 <div class="border-t border-gray-200 pt-6">
                   <h4 class="text-md font-medium text-gray-900 mb-4">Data Management</h4>
-                  <div class="space-y-3">
+                  <div class="space-x-3">
                     <UButton variant="soft" color="blue" size="sm">
                       Download My Data
                     </UButton>
