@@ -529,13 +529,6 @@ const clearFilters = () => {
   currentPage.value = 1
 }
 
-// Expose filter method for external use (like from stats cards)
-const filterByUnassigned = () => {
-  selectedTableFilter.value = 'unassigned'
-  selectedStatusFilter.value = null
-  currentPage.value = 1
-}
-
 // Methods
 const editGuest = (guest: Guest) => {
   guestToEdit.value = guest
@@ -613,10 +606,5 @@ onMounted(() => {
   if (!weddingStore.initialized) {
     weddingStore.initializeData()
   }
-})
-
-// Expose methods for external use
-defineExpose({
-  filterByUnassigned
 })
 </script>

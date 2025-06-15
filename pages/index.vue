@@ -101,10 +101,7 @@
               </div>
             </div>
 
-            <div 
-              class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors duration-200"
-              @click="handleUnassignedClick"
-            >
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
               <div class="flex items-center">
                 <div class="flex-shrink-0">
                   <UIcon name="i-heroicons-exclamation-circle" class="h-8 w-8 text-amber-600" />
@@ -114,15 +111,12 @@
                   <p class="text-2xl font-bold text-gray-900">{{ unassignedGuests }}</p>
                 </div>
               </div>
-              <div class="mt-2">
-                <p class="text-xs text-gray-500">Click to filter unassigned guests</p>
-              </div>
             </div>
           </div>
 
           <!-- Guest Management Table -->
           <Transition name="slide-up" appear>
-            <GuestTable ref="guestTableRef" />
+            <GuestTable />
           </Transition>
         </div>
       </main>
@@ -150,7 +144,6 @@ const weddingStore = useWeddingStore()
 
 // Reactive data
 const showShareModal = ref(false)
-const guestTableRef = ref()
 
 // Computed
 const { guests, tables } = storeToRefs(weddingStore)
@@ -211,13 +204,6 @@ const weddingCountdownMessage = computed(() => {
     }
   }
 })
-
-// Methods
-const handleUnassignedClick = () => {
-  if (guestTableRef.value && unassignedGuests.value > 0) {
-    guestTableRef.value.filterByUnassigned()
-  }
-}
 
 // Initialize data on mount
 onMounted(async () => {
