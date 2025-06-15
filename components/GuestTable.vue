@@ -40,6 +40,7 @@
             color="green"
             variant="soft"
             class="hidden sm:flex"
+            data-umami-event="import_csv"
             :loading="weddingStore.loading"
           >
             Import CSV
