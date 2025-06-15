@@ -193,9 +193,6 @@
       </div>
     </main>
 
-    <!-- Footer -->
-    <AppFooter />
-
     <!-- Notifications -->
     <UNotifications />
   </div>

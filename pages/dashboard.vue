@@ -75,9 +75,6 @@
         </div>
       </main>
 
-      <!-- Footer -->
-      <AppFooter />
-
       <!-- Share List Modal -->
       <ShareListModal v-model="showShareModal" />
 
