@@ -25,8 +25,8 @@ export default defineNuxtConfig({
       script: [
         {
           async: true,
-          src: 'https://analytics.umami.is/script.js',
-          'data-website-id': 'your-website-id-here'
+          src: 'https://cloud.umami.is/script.js',
+          'data-website-id': 'fcc50e51-e2f6-4d96-b46b-ff106207d2e0'
         }
       ]
     }
