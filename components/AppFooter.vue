@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-gray-50 border-t border-gray-200 py-6">
+  <footer class="bg-gray-50 py-6">
     <UContainer>
       <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
         <!-- Left side - Copyright and tagline -->
