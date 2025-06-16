@@ -29,6 +29,8 @@
             v-model="form.tableId"
             :options="weddingStore.tableOptions"
             placeholder="Select a table (optional)"
+            value-attribute="value"
+            option-attribute="label"
           />
         </UFormGroup>
 
@@ -37,6 +39,8 @@
             v-model="form.status"
             :options="statusOptions"
             placeholder="Select status"
+            value-attribute="value"
+            option-attribute="label"
           />
         </UFormGroup>
 
@@ -133,7 +137,14 @@ const validateForm = (): boolean => {
 const handleSubmit = async () => {
   if (!validateForm()) return
 
-  const success = await weddingStore.addGuest(form.value)
+  // Ensure tableId is properly set to null for "Unassigned"
+  const guestData: GuestFormData = {
+    name: form.value.name.trim(),
+    tableId: form.value.tableId === null || form.value.tableId === '' ? null : form.value.tableId,
+    status: form.value.status || 'pending'
+  }
+
+  const success = await weddingStore.addGuest(guestData)
   
   if (success) {
     closeModal()

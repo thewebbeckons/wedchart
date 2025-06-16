@@ -432,12 +432,15 @@ export const useWeddingStore = defineStore('wedding', () => {
         return false
       }
 
+      // Ensure tableId is properly handled - convert empty string to null
+      const tableId = guestData.tableId === '' || guestData.tableId === null ? null : guestData.tableId
+
       const { data, error: insertError } = await $supabase
         .from('guests')
         .insert({
           profile_id: profileId,
           name: guestData.name.trim(),
-          table_id: guestData.tableId,
+          table_id: tableId,
           status: guestData.status || 'pending'
         })
         .select()
@@ -485,11 +488,14 @@ export const useWeddingStore = defineStore('wedding', () => {
         return false
       }
 
+      // Ensure tableId is properly handled - convert empty string to null
+      const tableId = guestData.tableId === '' || guestData.tableId === null ? null : guestData.tableId
+
       const { data, error: updateError } = await $supabase
         .from('guests')
         .update({
           name: guestData.name.trim(),
-          table_id: guestData.tableId,
+          table_id: tableId,
           status: guestData.status || 'pending'
         })
         .eq('id', id)
