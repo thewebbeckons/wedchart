@@ -186,7 +186,7 @@
             </div>
             <h3 class="text-xl font-semibold text-gray-900 mb-4">Mobile Friendly</h3>
             <p class="text-gray-600">
-              Access your seating chart from anywhere. Our responsive design works perfectly on phones, tablets, and computers.
+              Your shared guest list works perfectly on all devices. Guests can easily find their table assignments on phones, tablets, and computers.
             </p>
           </div>
         </div>
