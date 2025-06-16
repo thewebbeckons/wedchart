@@ -12,7 +12,7 @@
         <!-- Right side - Support link -->
         <div class="flex items-center space-x-4">
           <a
-            href="https://buymeacoffee.com/wedchart"
+            href="https://coff.ee/667z79qdqdp"
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors duration-200 rounded-md hover:bg-gray-100"
