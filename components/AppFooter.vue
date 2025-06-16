@@ -4,12 +4,9 @@
       <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
         <!-- Left side - Copyright and tagline -->
         <div class="text-center sm:text-left">
-          <p class="text-sm text-gray-600">
+          <p class="text-sm text-gray-500">
             © 2024 WedChart. Made with ❤️ for couples planning their perfect day.
-          </p>
-          <p class="text-xs text-gray-500 mt-1">
-            Beautiful wedding seating charts made simple.
-          </p>
+          </p>          
         </div>
 
         <!-- Right side - Support link -->
