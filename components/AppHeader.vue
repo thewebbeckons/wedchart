@@ -20,6 +20,18 @@
             Welcome, {{ authStore.profile.full_name }}
           </span>
           
+          <!-- Table Planner Button (only on dashboard) -->
+          <UButton
+            v-if="showTablePlannerButton"
+            @click="$router.push('/table-planner')"
+            variant="soft"
+            color="blue"
+            icon="i-heroicons-table-cells"
+            class="hidden sm:flex"
+          >
+            Table Planner
+          </UButton>
+          
           <!-- Share List Button (only on dashboard) -->
           <UButton
             v-if="showShareButton"
@@ -33,16 +45,19 @@
             Share List
           </UButton>
           
-          <!-- Mobile Share Button (only on dashboard) -->
-          <UButton
-            v-if="showShareButton"
-            @click="$emit('share-list')"
-            variant="soft"
-            color="pink"
-            icon="i-heroicons-share"
+          <!-- Mobile Menu (only on dashboard) -->
+          <UDropdown 
+            v-if="showMobileMenu"
+            :items="mobileMenuItems" 
             class="sm:hidden"
-            :ui="{ rounded: 'rounded-full' }"
-          />
+          >
+            <UButton 
+              icon="i-heroicons-ellipsis-vertical" 
+              size="sm" 
+              color="gray" 
+              variant="soft" 
+            />
+          </UDropdown>
           
           <!-- Dashboard Button (only on account page) -->
           <UButton
@@ -94,10 +109,13 @@ const emit = defineEmits<{
 }>()
 
 const authStore = useAuthStore()
+const route = useRoute()
 
 // Computed properties for conditional rendering
 const showWelcome = computed(() => props.page === 'dashboard')
+const showTablePlannerButton = computed(() => props.page === 'dashboard' && route.path !== '/table-planner')
 const showShareButton = computed(() => props.page === 'dashboard')
+const showMobileMenu = computed(() => props.page === 'dashboard')
 const showAccountButton = computed(() => props.page === 'dashboard')
 const showDashboardButton = computed(() => props.page === 'account')
 const showLogoutButton = computed(() => props.page === 'account')
@@ -109,6 +127,20 @@ const logoLink = computed(() => {
   }
   return '/dashboard'
 })
+
+// Mobile menu items
+const mobileMenuItems = computed(() => [
+  [{
+    label: 'Table Planner',
+    icon: 'i-heroicons-table-cells',
+    click: () => navigateTo('/table-planner')
+  }],
+  [{
+    label: 'Share List',
+    icon: 'i-heroicons-share',
+    click: () => emit('share-list')
+  }]
+])
 
 // Methods
 const handleLogout = async () => {
