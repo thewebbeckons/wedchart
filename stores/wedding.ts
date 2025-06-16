@@ -432,8 +432,8 @@ export const useWeddingStore = defineStore('wedding', () => {
         return false
       }
 
-      // Ensure tableId is properly handled - convert empty string to null
-      const tableId = guestData.tableId === '' || guestData.tableId === null ? null : guestData.tableId
+      // Ensure tableId is properly handled - convert empty string, null, or "Unassigned" to null
+      const tableId = guestData.tableId === '' || guestData.tableId === null || guestData.tableId === 'Unassigned' ? null : guestData.tableId
 
       const { data, error: insertError } = await $supabase
         .from('guests')
@@ -488,8 +488,8 @@ export const useWeddingStore = defineStore('wedding', () => {
         return false
       }
 
-      // Ensure tableId is properly handled - convert empty string to null
-      const tableId = guestData.tableId === '' || guestData.tableId === null ? null : guestData.tableId
+      // Ensure tableId is properly handled - convert empty string, null, or "Unassigned" to null
+      const tableId = guestData.tableId === '' || guestData.tableId === null || guestData.tableId === 'Unassigned' ? null : guestData.tableId
 
       const { data, error: updateError } = await $supabase
         .from('guests')
