@@ -586,4 +586,3 @@ const scrollToFeatures = () => {
   transform: translateY(-2px) scale(1.01);
 }
 </style>
-</template>
