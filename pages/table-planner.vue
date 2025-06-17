@@ -210,8 +210,8 @@
                               <div
                                 :class="{
                                   'h-2 rounded-full transition-all duration-300': true,
-                                  'bg-green-500': getTableGuests(table.id).length / table.capacity <= 0.8,
-                                  'bg-yellow-500': getTableGuests(table.id).length / table.capacity > 0.8 && getTableGuests(table.id).length < table.capacity,
+                                  'bg-green-500': getTableGuests(table.id).length / table.capacity <= 0.7,
+                                  'bg-yellow-500': getTableGuests(table.id).length / table.capacity > 0.7 && getTableGuests(table.id).length < table.capacity,
                                   'bg-red-500': getTableGuests(table.id).length >= table.capacity
                                 }"
                                 :style="{ width: `${Math.min((getTableGuests(table.id).length / table.capacity) * 100, 100)}%` }"
