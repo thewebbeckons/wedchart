@@ -22,7 +22,7 @@
               @click="$router.push('/signup')"
               size="sm"
               data-umami-event="get_started_header"
-              class="bg-purple-500 hover:bg-purple-600 text-white border-0 shadow-sm hover:shadow-md transition-all duration-200"
+              class="bg-pink-500 hover:bg-pink-600 text-white border-0 shadow-sm hover:shadow-md transition-all duration-200"
             >
               Get Started
             </UButton>
