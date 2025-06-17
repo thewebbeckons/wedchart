@@ -87,15 +87,27 @@
                       class="mb-4"
                     />
 
-                    <!-- Status Filter -->
-                    <USelect
-                      v-model="statusFilter"
-                      :options="statusFilterOptions"
-                      placeholder="Filter by status"
-                      size="sm"
-                      value-attribute="value"
-                      option-attribute="label"
-                    />
+                    <!-- Status Filter with Clear Button -->
+                    <div class="flex items-center space-x-2">
+                      <USelect
+                        v-model="statusFilter"
+                        :options="statusFilterOptions"
+                        placeholder="Filter by status"
+                        size="sm"
+                        value-attribute="value"
+                        option-attribute="label"
+                        class="flex-1"
+                      />
+                      <UButton
+                        v-if="statusFilter !== null"
+                        @click="clearStatusFilter"
+                        icon="i-heroicons-x-mark"
+                        size="sm"
+                        color="gray"
+                        variant="soft"
+                        :ui="{ rounded: 'rounded-full' }"
+                      />
+                    </div>
                   </div>
 
                   <!-- Unassigned Guest List -->
@@ -375,7 +387,6 @@ const unassignedGuestsList = computed(() => {
 })
 
 const statusFilterOptions = computed(() => [
-  { label: 'All Statuses', value: null },
   { label: 'Confirmed', value: 'confirmed' },
   { label: 'Pending', value: 'pending' },
   { label: 'Declined', value: 'declined' }
@@ -403,6 +414,10 @@ const filteredUnassignedGuests = computed(() => {
 })
 
 // Methods
+const clearStatusFilter = () => {
+  statusFilter.value = null
+}
+
 const getTableGuests = (tableId: string): Guest[] => {
   return guests.value?.filter(guest => guest.tableId === tableId) || []
 }
