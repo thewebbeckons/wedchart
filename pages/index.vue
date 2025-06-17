@@ -90,19 +90,25 @@
         </div>
       </div>
 
-      <!-- Subtle Decorative Elements -->
+      <!-- Animated Decorative Elements -->
       <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <!-- Floating circles with muted colors -->
+        <!-- Large floating circles -->
         <div class="floating-circle floating-circle-1"></div>
         <div class="floating-circle floating-circle-2"></div>
         <div class="floating-circle floating-circle-3"></div>
         <div class="floating-circle floating-circle-4"></div>
+        <div class="floating-circle floating-circle-5"></div>
+        <div class="floating-circle floating-circle-6"></div>
         
         <!-- Small accent circles -->
         <div class="accent-circle accent-circle-1"></div>
         <div class="accent-circle accent-circle-2"></div>
         <div class="accent-circle accent-circle-3"></div>
         <div class="accent-circle accent-circle-4"></div>
+        <div class="accent-circle accent-circle-5"></div>
+        <div class="accent-circle accent-circle-6"></div>
+        <div class="accent-circle accent-circle-7"></div>
+        <div class="accent-circle accent-circle-8"></div>
       </div>
     </section>
 
@@ -336,89 +342,139 @@ const scrollToFeatures = () => {
   @apply text-gray-700;
 }
 
-/* Floating Circle Animations - Muted Colors */
+/* Floating Circle Animations */
 .floating-circle {
   position: absolute;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.04), rgba(236, 72, 153, 0.04));
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.06), rgba(236, 72, 153, 0.06));
   backdrop-filter: blur(1px);
-  animation: float 25s ease-in-out infinite;
+  animation: float 20s ease-in-out infinite;
 }
 
 .floating-circle-1 {
-  width: 180px;
-  height: 180px;
-  top: 15%;
-  left: -3%;
+  width: 200px;
+  height: 200px;
+  top: 10%;
+  left: -5%;
   animation-delay: 0s;
   background: linear-gradient(135deg, rgba(168, 85, 247, 0.05), rgba(147, 51, 234, 0.05));
 }
 
 .floating-circle-2 {
-  width: 140px;
-  height: 140px;
-  top: 65%;
-  right: -2%;
-  animation-delay: -8s;
+  width: 150px;
+  height: 150px;
+  top: 60%;
+  right: -3%;
+  animation-delay: -5s;
   background: linear-gradient(135deg, rgba(236, 72, 153, 0.04), rgba(168, 85, 247, 0.04));
 }
 
 .floating-circle-3 {
-  width: 100px;
-  height: 100px;
-  top: 35%;
-  right: 20%;
-  animation-delay: -15s;
+  width: 120px;
+  height: 120px;
+  top: 30%;
+  right: 15%;
+  animation-delay: -10s;
   background: linear-gradient(135deg, rgba(147, 51, 234, 0.06), rgba(168, 85, 247, 0.06));
 }
 
 .floating-circle-4 {
-  width: 160px;
-  height: 160px;
-  bottom: 25%;
-  left: 15%;
-  animation-delay: -20s;
+  width: 180px;
+  height: 180px;
+  bottom: 20%;
+  left: 10%;
+  animation-delay: -15s;
   background: linear-gradient(135deg, rgba(236, 72, 153, 0.03), rgba(147, 51, 234, 0.03));
 }
 
-/* Accent Circles - Smaller and More Subtle */
+.floating-circle-5 {
+  width: 100px;
+  height: 100px;
+  top: 20%;
+  left: 30%;
+  animation-delay: -7s;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.05), rgba(236, 72, 153, 0.05));
+}
+
+.floating-circle-6 {
+  width: 140px;
+  height: 140px;
+  bottom: 40%;
+  right: 25%;
+  animation-delay: -12s;
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.04), rgba(168, 85, 247, 0.04));
+}
+
+/* Accent Circles */
 .accent-circle {
   position: absolute;
   border-radius: 50%;
   background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(236, 72, 153, 0.08));
-  animation: pulse-float 20s ease-in-out infinite;
+  animation: pulse-float 15s ease-in-out infinite;
 }
 
 .accent-circle-1 {
-  width: 30px;
-  height: 30px;
-  top: 20%;
-  left: 25%;
+  width: 40px;
+  height: 40px;
+  top: 15%;
+  left: 20%;
   animation-delay: 0s;
 }
 
 .accent-circle-2 {
-  width: 24px;
-  height: 24px;
-  top: 50%;
-  left: 8%;
-  animation-delay: -5s;
+  width: 30px;
+  height: 30px;
+  top: 45%;
+  left: 5%;
+  animation-delay: -3s;
 }
 
 .accent-circle-3 {
-  width: 28px;
-  height: 28px;
-  top: 30%;
-  right: 12%;
-  animation-delay: -10s;
+  width: 35px;
+  height: 35px;
+  top: 25%;
+  right: 8%;
+  animation-delay: -6s;
 }
 
 .accent-circle-4 {
+  width: 25px;
+  height: 25px;
+  bottom: 30%;
+  left: 25%;
+  animation-delay: -9s;
+}
+
+.accent-circle-5 {
+  width: 45px;
+  height: 45px;
+  bottom: 15%;
+  right: 15%;
+  animation-delay: -12s;
+}
+
+.accent-circle-6 {
   width: 20px;
   height: 20px;
-  bottom: 35%;
-  right: 25%;
-  animation-delay: -15s;
+  top: 35%;
+  left: 45%;
+  animation-delay: -2s;
+}
+
+.accent-circle-7 {
+  width: 38px;
+  height: 38px;
+  top: 55%;
+  right: 35%;
+  animation-delay: -8s;
+}
+
+.accent-circle-8 {
+  width: 28px;
+  height: 28px;
+  bottom: 45%;
+  left: 60%;
+  animation-delay: -5s;
 }
 
 /* Animation Keyframes */
@@ -428,60 +484,70 @@ const scrollToFeatures = () => {
     opacity: 0.3;
   }
   25% {
-    transform: translateY(-15px) translateX(8px) rotate(90deg);
-    opacity: 0.4;
+    transform: translateY(-20px) translateX(10px) rotate(90deg);
+    opacity: 0.5;
   }
   50% {
-    transform: translateY(-8px) translateX(-12px) rotate(180deg);
-    opacity: 0.3;
+    transform: translateY(-10px) translateX(-15px) rotate(180deg);
+    opacity: 0.4;
   }
   75% {
-    transform: translateY(-20px) translateX(4px) rotate(270deg);
-    opacity: 0.5;
+    transform: translateY(-30px) translateX(5px) rotate(270deg);
+    opacity: 0.6;
   }
 }
 
 @keyframes pulse-float {
   0%, 100% {
     transform: translateY(0px) scale(1);
-    opacity: 0.3;
+    opacity: 0.4;
   }
   25% {
-    transform: translateY(-10px) scale(1.05);
-    opacity: 0.5;
+    transform: translateY(-15px) scale(1.1);
+    opacity: 0.6;
   }
   50% {
-    transform: translateY(-5px) scale(0.95);
-    opacity: 0.2;
+    transform: translateY(-8px) scale(0.9);
+    opacity: 0.3;
   }
   75% {
-    transform: translateY(-15px) scale(1.02);
-    opacity: 0.6;
+    transform: translateY(-20px) scale(1.05);
+    opacity: 0.7;
   }
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .floating-circle {
-    animation-duration: 30s;
+    animation-duration: 25s;
   }
   
   .floating-circle-1 {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .floating-circle-2 {
     width: 100px;
     height: 100px;
   }
   
-  .floating-circle-2 {
+  .floating-circle-3 {
     width: 80px;
     height: 80px;
   }
   
-  .floating-circle-3 {
-    width: 60px;
-    height: 60px;
+  .floating-circle-4 {
+    width: 110px;
+    height: 110px;
   }
   
-  .floating-circle-4 {
+  .floating-circle-5 {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .floating-circle-6 {
     width: 90px;
     height: 90px;
   }
@@ -520,3 +586,4 @@ const scrollToFeatures = () => {
   transform: translateY(-2px) scale(1.01);
 }
 </style>
+</template>
