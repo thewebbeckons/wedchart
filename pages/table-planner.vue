@@ -111,7 +111,7 @@
                   </div>
 
                   <!-- Unassigned Guest List -->
-                  <div class="p-4 max-h-96 overflow-y-auto">
+                  <div class="p-4 max-h-[600px] overflow-y-auto">
                     <div class="space-y-2">
                       <div
                         v-for="guest in filteredUnassignedGuests"
