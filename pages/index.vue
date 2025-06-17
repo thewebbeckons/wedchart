@@ -393,7 +393,7 @@ const scrollToFeatures = () => {
   top: 20%;
   left: 30%;
   animation-delay: -7s;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.05), rgba(236, 72, 153, 0.05));
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.07), rgba(236, 72, 153, 0.05));
 }
 
 .floating-circle-6 {
@@ -402,14 +402,14 @@ const scrollToFeatures = () => {
   bottom: 40%;
   right: 25%;
   animation-delay: -12s;
-  background: linear-gradient(135deg, rgba(147, 51, 234, 0.04), rgba(168, 85, 247, 0.04));
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.08), rgba(168, 85, 247, 0.04));
 }
 
 /* Accent Circles */
 .accent-circle {
   position: absolute;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(236, 72, 153, 0.08));
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(236, 72, 153, 0.08));
   animation: pulse-float 15s ease-in-out infinite;
 }
 
