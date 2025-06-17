@@ -433,11 +433,19 @@ const canDropOnTable = (table: Table): boolean => {
 }
 
 const getTableMenuItems = (table: Table) => {
+  const tableGuests = getTableGuests(table.id)
+  
   return [
     [{
       label: 'Edit Table',
       icon: 'i-heroicons-pencil',
       click: () => editTable(table)
+    }],
+    [{
+      label: 'Remove Guests',
+      icon: 'i-heroicons-user-minus',
+      click: () => removeAllGuestsFromTable(table),
+      disabled: tableGuests.length === 0
     }],
     [{
       label: 'Delete Table',
@@ -454,6 +462,60 @@ const editTable = (table: Table) => {
     description: 'Table editing will be available soon',
     color: 'blue'
   })
+}
+
+const removeAllGuestsFromTable = async (table: Table) => {
+  const tableGuests = getTableGuests(table.id)
+  
+  if (tableGuests.length === 0) {
+    $toast.add({
+      title: 'No Guests to Remove',
+      description: 'This table has no assigned guests',
+      color: 'orange'
+    })
+    return
+  }
+
+  try {
+    // Update all guests to remove their table assignment
+    const updatePromises = tableGuests.map(guest =>
+      weddingStore.updateGuest(guest.id, {
+        name: guest.name,
+        tableId: null,
+        status: guest.status || 'pending'
+      })
+    )
+
+    const results = await Promise.all(updatePromises)
+    const successCount = results.filter(result => result).length
+
+    if (successCount === tableGuests.length) {
+      $toast.add({
+        title: 'Guests Removed',
+        description: `All ${tableGuests.length} guests removed from ${table.name}`,
+        color: 'green'
+      })
+    } else if (successCount > 0) {
+      $toast.add({
+        title: 'Partially Completed',
+        description: `${successCount} of ${tableGuests.length} guests removed from ${table.name}`,
+        color: 'yellow'
+      })
+    } else {
+      $toast.add({
+        title: 'Failed to Remove Guests',
+        description: 'Could not remove guests from the table',
+        color: 'red'
+      })
+    }
+  } catch (error) {
+    console.error('Error removing guests from table:', error)
+    $toast.add({
+      title: 'Error',
+      description: 'An error occurred while removing guests',
+      color: 'red'
+    })
+  }
 }
 
 const deleteTable = async (table: Table) => {
