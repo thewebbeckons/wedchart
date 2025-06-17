@@ -6,7 +6,7 @@
         <div class="flex justify-between items-center py-6">
           <!-- Logo -->
           <div class="flex items-center">
-            <UIcon name="i-heroicons-heart" class="h-8 w-8 text-purple-400 mr-3" />
+            <UIcon name="i-heroicons-heart" class="h-8 w-8 text-pink-400 mr-3" />
             <h1 class="text-2xl font-bold text-gray-900">WedChart</h1>
           </div>
 
