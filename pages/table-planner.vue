@@ -11,9 +11,19 @@
             <!-- Page Header -->
             <div class="text-center">
               <h2 class="text-3xl font-bold text-gray-900 mb-2">Table Planner</h2>
-              <p class="text-lg text-gray-600">
+              <p class="text-lg text-gray-600 mb-4">
                 Drag and drop guests to assign them to tables
               </p>
+              <!-- Link back to guest management -->
+              <UButton
+                @click="$router.push('/dashboard')"
+                variant="soft"
+                color="gray"
+                icon="i-heroicons-arrow-left"
+                size="sm"
+              >
+                Back to Guest Management
+              </UButton>
             </div>
 
             <!-- Stats Bar -->
@@ -48,25 +58,26 @@
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
               <!-- Left Section - Unassigned Guests -->
               <div class="lg:col-span-1">
+                <!-- Title and Add Button (outside the card) -->
+                <div class="flex items-center justify-between mb-4">
+                  <h3 class="text-lg font-semibold text-gray-900">
+                    Unassigned Guests
+                    <span class="ml-2 text-sm font-normal text-gray-500">
+                      ({{ unassignedGuestsList.length }})
+                    </span>
+                  </h3>
+                  <UButton
+                    @click="showAddGuestModal = true"
+                    size="sm"
+                    icon="i-heroicons-plus"
+                    variant="soft"
+                  >
+                    Add
+                  </UButton>
+                </div>
+
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 h-full">
                   <div class="p-4 border-b border-gray-200">
-                    <div class="flex items-center justify-between mb-4">
-                      <h3 class="text-lg font-semibold text-gray-900">
-                        Unassigned Guests
-                        <span class="ml-2 text-sm font-normal text-gray-500">
-                          ({{ unassignedGuestsList.length }})
-                        </span>
-                      </h3>
-                      <UButton
-                        @click="showAddGuestModal = true"
-                        size="sm"
-                        icon="i-heroicons-plus"
-                        variant="soft"
-                      >
-                        Add
-                      </UButton>
-                    </div>
-                    
                     <!-- Search Filter -->
                     <UInput
                       v-model="guestSearchQuery"
@@ -82,6 +93,8 @@
                       :options="statusFilterOptions"
                       placeholder="Filter by status"
                       size="sm"
+                      value-attribute="value"
+                      option-attribute="label"
                     />
                   </div>
 
@@ -379,8 +392,8 @@ const filteredUnassignedGuests = computed(() => {
     )
   }
 
-  // Apply status filter
-  if (statusFilter.value) {
+  // Apply status filter - only filter if statusFilter has a value (not null)
+  if (statusFilter.value !== null) {
     filtered = filtered.filter(guest =>
       (guest.status || 'pending') === statusFilter.value
     )
