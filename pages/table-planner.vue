@@ -238,7 +238,7 @@
                       </div>
 
                       <!-- Assigned Guests -->
-                      <div class="space-y-2 min-h-24 max-h-48 overflow-y-auto">
+                      <div class="space-y-2 min-h-24 max-h-60 overflow-y-auto">
                         <div
                           v-for="guest in getTableGuests(table.id)"
                           :key="guest.id"
