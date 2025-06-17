@@ -221,7 +221,7 @@
           <!-- Brand -->
           <div class="col-span-1 md:col-span-2">
             <div class="flex items-center mb-4">
-              <UIcon name="i-heroicons-heart" class="h-8 w-8 text-purple-400 mr-3" />
+              <UIcon name="i-heroicons-heart" class="h-8 w-8 text-pink-400 mr-3" />
               <h3 class="text-2xl font-bold">WedChart</h3>
             </div>
             <p class="text-gray-400 max-w-md">
