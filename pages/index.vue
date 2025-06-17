@@ -1,12 +1,12 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-pink-50 via-white to-purple-50">
+  <div class="min-h-screen bg-gradient-to-br from-gray-50 via-white to-purple-50/30">
     <!-- Navigation -->
-    <nav class="relative z-10 bg-white/80 backdrop-blur-sm shadow-sm">
+    <nav class="relative z-10 bg-white/90 backdrop-blur-sm shadow-sm border-b border-gray-100">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center py-6">
           <!-- Logo -->
           <div class="flex items-center">
-            <UIcon name="i-heroicons-heart" class="h-8 w-8 text-pink-500 mr-3" />
+            <UIcon name="i-heroicons-heart" class="h-8 w-8 text-purple-400 mr-3" />
             <h1 class="text-2xl font-bold text-gray-900">WedChart</h1>
           </div>
 
@@ -14,7 +14,7 @@
           <div class="flex items-center space-x-4">
             <NuxtLink
               to="/login"
-              class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+              class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
             >
               Sign In
             </NuxtLink>
@@ -22,6 +22,7 @@
               @click="$router.push('/signup')"
               size="sm"
               data-umami-event="get_started_header"
+              class="bg-purple-500 hover:bg-purple-600 text-white border-0 shadow-sm hover:shadow-md transition-all duration-200"
             >
               Get Started
             </UButton>
@@ -38,7 +39,7 @@
           <div class="max-w-4xl mx-auto">
             <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-8">
               Plan Your Perfect
-              <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
                 Wedding Seating
               </span>
             </h1>
@@ -53,7 +54,7 @@
               <UButton
                 @click="$router.push('/signup')"
                 size="xl"
-                class="px-8 py-4 text-lg"
+                class="px-8 py-4 text-lg bg-purple-500 hover:bg-purple-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
               >
                 Start Planning Free
               </UButton>
@@ -63,7 +64,7 @@
                 variant="soft"
                 color="gray"
                 size="xl"
-                class="px-8 py-4 text-lg"
+                class="px-8 py-4 text-lg bg-white/80 hover:bg-white text-gray-700 border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300"
                 icon="i-heroicons-play"
               >
                 See How It Works
@@ -73,15 +74,15 @@
             <!-- Trust Indicators -->
             <div class="flex flex-col sm:flex-row items-center justify-center gap-8 text-sm text-gray-500">
               <div class="flex items-center">
-                <UIcon name="i-heroicons-check-circle" class="h-5 w-5 text-green-500 mr-2" />
+                <UIcon name="i-heroicons-check-circle" class="h-5 w-5 text-green-400 mr-2" />
                 Free to use
               </div>
               <div class="flex items-center">
-                <UIcon name="i-heroicons-check-circle" class="h-5 w-5 text-green-500 mr-2" />
+                <UIcon name="i-heroicons-check-circle" class="h-5 w-5 text-green-400 mr-2" />
                 No credit card required
               </div>
               <div class="flex items-center">
-                <UIcon name="i-heroicons-check-circle" class="h-5 w-5 text-green-500 mr-2" />
+                <UIcon name="i-heroicons-check-circle" class="h-5 w-5 text-green-400 mr-2" />
                 Setup in minutes
               </div>
             </div>
@@ -89,25 +90,19 @@
         </div>
       </div>
 
-      <!-- Animated Decorative Elements -->
+      <!-- Subtle Decorative Elements -->
       <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <!-- Large floating circles -->
+        <!-- Floating circles with muted colors -->
         <div class="floating-circle floating-circle-1"></div>
         <div class="floating-circle floating-circle-2"></div>
         <div class="floating-circle floating-circle-3"></div>
         <div class="floating-circle floating-circle-4"></div>
-        <div class="floating-circle floating-circle-5"></div>
-        <div class="floating-circle floating-circle-6"></div>
         
         <!-- Small accent circles -->
         <div class="accent-circle accent-circle-1"></div>
         <div class="accent-circle accent-circle-2"></div>
         <div class="accent-circle accent-circle-3"></div>
         <div class="accent-circle accent-circle-4"></div>
-        <div class="accent-circle accent-circle-5"></div>
-        <div class="accent-circle accent-circle-6"></div>
-        <div class="accent-circle accent-circle-7"></div>
-        <div class="accent-circle accent-circle-8"></div>
       </div>
     </section>
 
@@ -125,67 +120,67 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <!-- Feature 1 -->
-          <div class="text-center p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-pink-100 border border-pink-200">
-            <div class="w-16 h-16 bg-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <UIcon name="i-heroicons-users" class="h-8 w-8 text-white" />
+          <div class="feature-card group">
+            <div class="feature-icon bg-gradient-to-br from-purple-100 to-purple-200">
+              <UIcon name="i-heroicons-users" class="h-8 w-8 text-purple-600" />
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-4">Guest Management</h3>
-            <p class="text-gray-600">
+            <h3 class="feature-title">Guest Management</h3>
+            <p class="feature-description">
               Easily add, edit, and organize your wedding guests. Track RSVPs and manage dietary restrictions all in one place.
             </p>
           </div>
 
           <!-- Feature 2 -->
-          <div class="text-center p-6 rounded-2xl bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200">
-            <div class="w-16 h-16 bg-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <UIcon name="i-heroicons-table-cells" class="h-8 w-8 text-white" />
+          <div class="feature-card group">
+            <div class="feature-icon bg-gradient-to-br from-pink-100 to-pink-200">
+              <UIcon name="i-heroicons-table-cells" class="h-8 w-8 text-pink-600" />
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-4">Table Arrangements</h3>
-            <p class="text-gray-600">
+            <h3 class="feature-title">Table Arrangements</h3>
+            <p class="feature-description">
               Create and customize tables with capacity limits. Drag and drop guests to arrange perfect seating combinations.
             </p>
           </div>
 
           <!-- Feature 3 -->
-          <div class="text-center p-6 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200">
-            <div class="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <UIcon name="i-heroicons-share" class="h-8 w-8 text-white" />
+          <div class="feature-card group">
+            <div class="feature-icon bg-gradient-to-br from-blue-100 to-blue-200">
+              <UIcon name="i-heroicons-share" class="h-8 w-8 text-blue-600" />
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-4">Share with Guests</h3>
-            <p class="text-gray-600">
+            <h3 class="feature-title">Share with Guests</h3>
+            <p class="feature-description">
               Generate a beautiful public link where guests can search for their table assignments. No more confusion on your big day!
             </p>
           </div>
 
           <!-- Feature 4 -->
-          <div class="text-center p-6 rounded-2xl bg-gradient-to-br from-green-50 to-green-100 border border-green-200">
-            <div class="w-16 h-16 bg-green-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <UIcon name="i-heroicons-arrow-up-tray" class="h-8 w-8 text-white" />
+          <div class="feature-card group">
+            <div class="feature-icon bg-gradient-to-br from-emerald-100 to-emerald-200">
+              <UIcon name="i-heroicons-arrow-up-tray" class="h-8 w-8 text-emerald-600" />
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-4">CSV Import</h3>
-            <p class="text-gray-600">
+            <h3 class="feature-title">CSV Import</h3>
+            <p class="feature-description">
               Already have your guest list? Import it instantly with our CSV upload feature. Save time and avoid manual entry.
             </p>
           </div>
 
           <!-- Feature 5 -->
-          <div class="text-center p-6 rounded-2xl bg-gradient-to-br from-amber-50 to-amber-100 border border-amber-200">
-            <div class="w-16 h-16 bg-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <UIcon name="i-heroicons-qr-code" class="h-8 w-8 text-white" />
+          <div class="feature-card group">
+            <div class="feature-icon bg-gradient-to-br from-amber-100 to-amber-200">
+              <UIcon name="i-heroicons-qr-code" class="h-8 w-8 text-amber-600" />
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-4">QR Code Generation</h3>
-            <p class="text-gray-600">
+            <h3 class="feature-title">QR Code Generation</h3>
+            <p class="feature-description">
               Create QR codes for easy access to your seating chart. Perfect for wedding programs or table displays.
             </p>
           </div>
 
           <!-- Feature 6 -->
-          <div class="text-center p-6 rounded-2xl bg-gradient-to-br from-rose-50 to-rose-100 border border-rose-200">
-            <div class="w-16 h-16 bg-rose-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <UIcon name="i-heroicons-device-phone-mobile" class="h-8 w-8 text-white" />
+          <div class="feature-card group">
+            <div class="feature-icon bg-gradient-to-br from-rose-100 to-rose-200">
+              <UIcon name="i-heroicons-device-phone-mobile" class="h-8 w-8 text-rose-600" />
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-4">Mobile Friendly</h3>
-            <p class="text-gray-600">
+            <h3 class="feature-title">Mobile Friendly</h3>
+            <p class="feature-description">
               Your shared guest list works perfectly on all devices. Guests can easily find their table assignments on phones, tablets, and computers.
             </p>
           </div>
@@ -194,19 +189,19 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="py-20 bg-gradient-to-r from-pink-500 to-purple-600">
+    <section class="py-20 bg-gradient-to-r from-purple-500/90 to-pink-500/90">
       <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6">
           Ready to Create Your Perfect Seating Chart?
         </h2>
-        <p class="text-xl text-pink-100 mb-8">
+        <p class="text-xl text-purple-100 mb-8">
           Join thousands of couples who have simplified their wedding planning with WedChart.
         </p>
         <UButton
           @click="$router.push('/signup')"
           size="xl"
           color="white"
-          class="px-8 py-4 text-lg text-pink-600 hover:text-pink-700"
+          class="px-8 py-4 text-lg text-purple-600 hover:text-purple-700 bg-white hover:bg-gray-50 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
         >
           Start Planning Your Wedding
         </UButton>
@@ -220,7 +215,7 @@
           <!-- Brand -->
           <div class="col-span-1 md:col-span-2">
             <div class="flex items-center mb-4">
-              <UIcon name="i-heroicons-heart" class="h-8 w-8 text-pink-500 mr-3" />
+              <UIcon name="i-heroicons-heart" class="h-8 w-8 text-purple-400 mr-3" />
               <h3 class="text-2xl font-bold">WedChart</h3>
             </div>
             <p class="text-gray-400 max-w-md">
@@ -233,12 +228,12 @@
             <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
             <ul class="space-y-2">
               <li>
-                <NuxtLink to="/login" class="text-gray-400 hover:text-white transition-colors">
+                <NuxtLink to="/login" class="text-gray-400 hover:text-white transition-colors duration-200">
                   Sign In
                 </NuxtLink>
               </li>
               <li>
-                <NuxtLink to="/signup" class="text-gray-400 hover:text-white transition-colors">
+                <NuxtLink to="/signup" class="text-gray-400 hover:text-white transition-colors duration-200">
                   Get Started
                 </NuxtLink>
               </li>
@@ -250,12 +245,12 @@
             <h4 class="text-lg font-semibold mb-4">Support</h4>
             <ul class="space-y-2">
               <li>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
                   Help Center
                 </a>
               </li>
               <li>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
                   Contact Us
                 </a>
               </li>
@@ -302,139 +297,128 @@ const scrollToFeatures = () => {
 </script>
 
 <style scoped>
-/* Floating Circle Animations */
+/* Feature Card Styles */
+.feature-card {
+  @apply relative bg-white rounded-2xl p-8 border border-gray-100 shadow-sm;
+  transition: all 250ms ease-in-out;
+  transform: translateY(0);
+}
+
+.feature-card:hover {
+  @apply shadow-xl border-gray-200;
+  transform: translateY(-4px) scale(1.02);
+}
+
+.feature-icon {
+  @apply w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6;
+  transition: all 250ms ease-in-out;
+}
+
+.feature-card:hover .feature-icon {
+  transform: scale(1.1);
+}
+
+.feature-title {
+  @apply text-xl font-semibold text-gray-900 mb-4 text-center;
+  transition: color 250ms ease-in-out;
+}
+
+.feature-card:hover .feature-title {
+  @apply text-gray-800;
+}
+
+.feature-description {
+  @apply text-gray-600 text-center leading-relaxed;
+  transition: color 250ms ease-in-out;
+}
+
+.feature-card:hover .feature-description {
+  @apply text-gray-700;
+}
+
+/* Floating Circle Animations - Muted Colors */
 .floating-circle {
   position: absolute;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(147, 51, 234, 0.1));
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.04), rgba(236, 72, 153, 0.04));
   backdrop-filter: blur(1px);
-  animation: float 20s ease-in-out infinite;
+  animation: float 25s ease-in-out infinite;
 }
 
 .floating-circle-1 {
-  width: 200px;
-  height: 200px;
-  top: 10%;
-  left: -5%;
+  width: 180px;
+  height: 180px;
+  top: 15%;
+  left: -3%;
   animation-delay: 0s;
-  background: linear-gradient(135deg, rgba(236, 72, 153, 0.08), rgba(147, 51, 234, 0.08));
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.05), rgba(147, 51, 234, 0.05));
 }
 
 .floating-circle-2 {
-  width: 150px;
-  height: 150px;
-  top: 60%;
-  right: -3%;
-  animation-delay: -5s;
-  background: linear-gradient(135deg, rgba(147, 51, 234, 0.1), rgba(59, 130, 246, 0.1));
+  width: 140px;
+  height: 140px;
+  top: 65%;
+  right: -2%;
+  animation-delay: -8s;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.04), rgba(168, 85, 247, 0.04));
 }
 
 .floating-circle-3 {
-  width: 120px;
-  height: 120px;
-  top: 30%;
-  right: 15%;
-  animation-delay: -10s;
-  background: linear-gradient(135deg, rgba(236, 72, 153, 0.12), rgba(168, 85, 247, 0.12));
+  width: 100px;
+  height: 100px;
+  top: 35%;
+  right: 20%;
+  animation-delay: -15s;
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.06), rgba(168, 85, 247, 0.06));
 }
 
 .floating-circle-4 {
-  width: 180px;
-  height: 180px;
-  bottom: 20%;
-  left: 10%;
-  animation-delay: -15s;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(236, 72, 153, 0.08));
+  width: 160px;
+  height: 160px;
+  bottom: 25%;
+  left: 15%;
+  animation-delay: -20s;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.03), rgba(147, 51, 234, 0.03));
 }
 
-.floating-circle-5 {
-  width: 100px;
-  height: 100px;
-  top: 20%;
-  left: 30%;
-  animation-delay: -7s;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));
-}
-
-.floating-circle-6 {
-  width: 140px;
-  height: 140px;
-  bottom: 40%;
-  right: 25%;
-  animation-delay: -12s;
-  background: linear-gradient(135deg, rgba(236, 72, 153, 0.09), rgba(59, 130, 246, 0.09));
-}
-
-/* Accent Circles */
+/* Accent Circles - Smaller and More Subtle */
 .accent-circle {
   position: absolute;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(147, 51, 234, 0.15));
-  animation: pulse-float 15s ease-in-out infinite;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(236, 72, 153, 0.08));
+  animation: pulse-float 20s ease-in-out infinite;
 }
 
 .accent-circle-1 {
-  width: 40px;
-  height: 40px;
-  top: 15%;
-  left: 20%;
+  width: 30px;
+  height: 30px;
+  top: 20%;
+  left: 25%;
   animation-delay: 0s;
 }
 
 .accent-circle-2 {
-  width: 30px;
-  height: 30px;
-  top: 45%;
-  left: 5%;
-  animation-delay: -3s;
+  width: 24px;
+  height: 24px;
+  top: 50%;
+  left: 8%;
+  animation-delay: -5s;
 }
 
 .accent-circle-3 {
-  width: 35px;
-  height: 35px;
-  top: 25%;
-  right: 8%;
-  animation-delay: -6s;
+  width: 28px;
+  height: 28px;
+  top: 30%;
+  right: 12%;
+  animation-delay: -10s;
 }
 
 .accent-circle-4 {
-  width: 25px;
-  height: 25px;
-  bottom: 30%;
-  left: 25%;
-  animation-delay: -9s;
-}
-
-.accent-circle-5 {
-  width: 45px;
-  height: 45px;
-  bottom: 15%;
-  right: 15%;
-  animation-delay: -12s;
-}
-
-.accent-circle-6 {
   width: 20px;
   height: 20px;
-  top: 35%;
-  left: 45%;
-  animation-delay: -2s;
-}
-
-.accent-circle-7 {
-  width: 38px;
-  height: 38px;
-  top: 55%;
-  right: 35%;
-  animation-delay: -8s;
-}
-
-.accent-circle-8 {
-  width: 28px;
-  height: 28px;
-  bottom: 45%;
-  left: 60%;
-  animation-delay: -5s;
+  bottom: 35%;
+  right: 25%;
+  animation-delay: -15s;
 }
 
 /* Animation Keyframes */
@@ -444,72 +428,95 @@ const scrollToFeatures = () => {
     opacity: 0.3;
   }
   25% {
-    transform: translateY(-20px) translateX(10px) rotate(90deg);
-    opacity: 0.5;
-  }
-  50% {
-    transform: translateY(-10px) translateX(-15px) rotate(180deg);
+    transform: translateY(-15px) translateX(8px) rotate(90deg);
     opacity: 0.4;
   }
+  50% {
+    transform: translateY(-8px) translateX(-12px) rotate(180deg);
+    opacity: 0.3;
+  }
   75% {
-    transform: translateY(-30px) translateX(5px) rotate(270deg);
-    opacity: 0.6;
+    transform: translateY(-20px) translateX(4px) rotate(270deg);
+    opacity: 0.5;
   }
 }
 
 @keyframes pulse-float {
   0%, 100% {
     transform: translateY(0px) scale(1);
-    opacity: 0.4;
-  }
-  25% {
-    transform: translateY(-15px) scale(1.1);
-    opacity: 0.6;
-  }
-  50% {
-    transform: translateY(-8px) scale(0.9);
     opacity: 0.3;
   }
+  25% {
+    transform: translateY(-10px) scale(1.05);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-5px) scale(0.95);
+    opacity: 0.2;
+  }
   75% {
-    transform: translateY(-20px) scale(1.05);
-    opacity: 0.7;
+    transform: translateY(-15px) scale(1.02);
+    opacity: 0.6;
   }
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .floating-circle {
-    animation-duration: 25s;
+    animation-duration: 30s;
   }
   
   .floating-circle-1 {
-    width: 120px;
-    height: 120px;
-  }
-  
-  .floating-circle-2 {
     width: 100px;
     height: 100px;
   }
   
-  .floating-circle-3 {
+  .floating-circle-2 {
     width: 80px;
     height: 80px;
   }
   
+  .floating-circle-3 {
+    width: 60px;
+    height: 60px;
+  }
+  
   .floating-circle-4 {
-    width: 110px;
-    height: 110px;
-  }
-  
-  .floating-circle-5 {
-    width: 70px;
-    height: 70px;
-  }
-  
-  .floating-circle-6 {
     width: 90px;
     height: 90px;
   }
+
+  .feature-card {
+    @apply p-6;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-2px) scale(1.01);
+  }
+}
+
+/* Additional refinements for premium feel */
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity 250ms ease-in-out;
+  pointer-events: none;
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+/* Smooth focus states for accessibility */
+.feature-card:focus-within {
+  @apply outline-none ring-2 ring-purple-200 ring-offset-2;
+  transform: translateY(-2px) scale(1.01);
 }
 </style>
