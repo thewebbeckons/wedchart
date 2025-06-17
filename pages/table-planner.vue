@@ -525,6 +525,12 @@ const handleDrop = async (table: Table, event: DragEvent) => {
   event.preventDefault()
   dragOverTable.value = null
 
+  // Add null check for table
+  if (!table) {
+    console.warn('handleDrop called with null table')
+    return
+  }
+
   if (!draggingGuest.value) return
 
   // Check if we can drop on this table
