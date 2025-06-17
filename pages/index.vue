@@ -32,7 +32,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative overflow-hidden bg-pink-100/30">
+    <section class="relative overflow-hidden bg-pink-200/30">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32 ">
         <div class="text-center">
           <!-- Hero Content -->
