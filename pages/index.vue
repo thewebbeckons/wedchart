@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-gray-50 via-white to-purple-50/30">
     <!-- Navigation -->
-    <nav class="relative z-10 bg-white/90 backdrop-blur-sm shadow-sm border-b border-gray-100">
+    <nav class="relative z-10 bg-pink/30 backdrop-blur-sm shadow-sm border-b border-gray-100">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center py-6">
           <!-- Logo -->
