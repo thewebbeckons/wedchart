@@ -4,6 +4,9 @@ export interface Guest {
   tableId: string | null
   tableName?: string
   status?: 'confirmed' | 'pending' | 'declined'
+  dietaryRestrictions?: string
+  isPlusOne?: boolean
+  primaryGuestId?: string | null
   createdAt: Date
   updatedAt: Date
 }
@@ -36,6 +39,9 @@ export interface GuestFormData {
   name: string
   tableId: string | null
   status?: 'confirmed' | 'pending' | 'declined'
+  dietaryRestrictions?: string
+  hasPlusOne?: boolean
+  plusOneName?: string
 }
 
 export interface TableFormData {

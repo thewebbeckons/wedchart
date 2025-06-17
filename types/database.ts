@@ -72,6 +72,9 @@ export interface Database {
           table_id: string | null
           name: string
           status: string | null
+          dietary_restrictions: string | null
+          is_plus_one: boolean
+          primary_guest_id: string | null
           created_at: string
           updated_at: string
         }
@@ -81,6 +84,9 @@ export interface Database {
           table_id?: string | null
           name: string
           status?: string | null
+          dietary_restrictions?: string | null
+          is_plus_one?: boolean
+          primary_guest_id?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -90,6 +96,9 @@ export interface Database {
           table_id?: string | null
           name?: string
           status?: string | null
+          dietary_restrictions?: string | null
+          is_plus_one?: boolean
+          primary_guest_id?: string | null
           created_at?: string
           updated_at?: string
         }

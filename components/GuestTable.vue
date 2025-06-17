@@ -152,10 +152,18 @@
       >
         <template #name-data="{ row }">
           <div class="flex items-center">
-            <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center mr-3">
-              <UIcon name="i-heroicons-user" class="h-4 w-4 text-blue-600" />
+            <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center mr-3 relative">
+              <UTooltip 
+                :text="row.dietaryRestrictions || 'No dietary restrictions'"
+                :popper="{ placement: 'top' }"
+              >
+                <span class="text-lg cursor-help">🍽️</span>
+              </UTooltip>
             </div>
-            <span class="font-medium text-gray-900">{{ row.name }}</span>
+            <div class="flex flex-col">
+              <span class="font-medium text-gray-900">{{ row.name }}</span>
+              <span v-if="row.isPlusOne" class="text-xs text-gray-500 italic">Plus One</span>
+            </div>
           </div>
         </template>
 
@@ -264,6 +272,15 @@
             />
           </UFormGroup>
 
+          <UFormGroup label="Dietary Restrictions" help="Any allergies or special dietary requirements">
+            <UTextarea
+              v-model="editForm.dietaryRestrictions"
+              placeholder="Enter any dietary requirements or allergies"
+              :rows="3"
+              resize
+            />
+          </UFormGroup>
+
           <div class="flex justify-end space-x-2 pt-4">
             <UButton
               type="button"
@@ -303,6 +320,9 @@
         <div class="py-4">
           <p class="text-gray-600">
             Are you sure you want to delete <strong>{{ guestToDelete?.name }}</strong>? 
+            <span v-if="guestToDelete && getPlusOneGuests(guestToDelete.id).length > 0">
+              This will also delete {{ getPlusOneGuests(guestToDelete.id).length }} associated plus one guest(s).
+            </span>
             This action cannot be undone.
           </p>
         </div>
@@ -321,7 +341,7 @@
               @click="handleDelete"
               :loading="weddingStore.loading"
             >
-              Delete Guest
+              Delete Guest{{ guestToDelete && getPlusOneGuests(guestToDelete.id).length > 0 ? 's' : '' }}
             </UButton>
           </div>
         </template>
@@ -365,7 +385,8 @@ const selectedStatusFilter = ref<string | null>(null)
 const editForm = ref<GuestFormData>({
   name: '',
   tableId: null,
-  status: 'pending'
+  status: 'pending',
+  dietaryRestrictions: ''
 })
 
 const editErrors = ref({
@@ -510,6 +531,11 @@ const mobileMenuItems = computed(() => [
   }]
 ])
 
+// Helper methods
+const getPlusOneGuests = (primaryGuestId: string): Guest[] => {
+  return weddingStore.guests.filter(guest => guest.primaryGuestId === primaryGuestId)
+}
+
 // Filter helper methods
 const getTableFilterLabel = (value: string): string => {
   if (value === 'unassigned') return 'Unassigned'
@@ -534,7 +560,8 @@ const editGuest = (guest: Guest) => {
   editForm.value = {
     name: guest.name,
     tableId: guest.tableId,
-    status: guest.status || 'pending'
+    status: guest.status || 'pending',
+    dietaryRestrictions: guest.dietaryRestrictions || ''
   }
   editErrors.value = { name: '' }
   showEditModal.value = true

@@ -13,7 +13,7 @@
         </div>
       </template>
 
-      <form @submit.prevent="handleSubmit" class="space-y-4">
+      <form @submit.prevent="handleSubmit" class="space-y-6">
         <UFormGroup label="Guest Name" required>
           <UInput
             v-model="form.name"
@@ -44,6 +44,35 @@
           />
         </UFormGroup>
 
+        <UFormGroup label="Dietary Restrictions" help="Any allergies or special dietary requirements">
+          <UTextarea
+            v-model="form.dietaryRestrictions"
+            placeholder="Enter any dietary requirements or allergies"
+            :rows="3"
+            resize
+          />
+        </UFormGroup>
+
+        <UFormGroup>
+          <div class="flex items-center space-x-3">
+            <UCheckbox
+              v-model="form.hasPlusOne"
+              label="This guest has a plus one"
+            />
+          </div>
+        </UFormGroup>
+
+        <Transition name="slide-down">
+          <UFormGroup v-if="form.hasPlusOne" label="Plus One Name" required>
+            <UInput
+              v-model="form.plusOneName"
+              placeholder="Enter plus one name"
+              :error="errors.plusOneName"
+              :required="form.hasPlusOne"
+            />
+          </UFormGroup>
+        </Transition>
+
         <div class="flex justify-end space-x-2 pt-4">
           <UButton
             type="button"
@@ -56,9 +85,9 @@
           <UButton
             type="submit"
             :loading="weddingStore.loading"
-            :disabled="!form.name.trim()"
+            :disabled="!isFormValid"
           >
-            Add Guest
+            {{ form.hasPlusOne ? 'Add Guests' : 'Add Guest' }}
           </UButton>
         </div>
       </form>
@@ -84,11 +113,15 @@ const weddingStore = useWeddingStore()
 const form = ref<GuestFormData>({
   name: '',
   tableId: null,
-  status: 'pending'
+  status: 'pending',
+  dietaryRestrictions: '',
+  hasPlusOne: false,
+  plusOneName: ''
 })
 
 const errors = ref({
-  name: ''
+  name: '',
+  plusOneName: ''
 })
 
 // Computed
@@ -103,14 +136,23 @@ const statusOptions = [
   { label: 'Declined', value: 'declined' }
 ]
 
+const isFormValid = computed(() => {
+  const hasValidName = form.value.name.trim().length > 0
+  const hasValidPlusOne = !form.value.hasPlusOne || (form.value.plusOneName && form.value.plusOneName.trim().length > 0)
+  return hasValidName && hasValidPlusOne && !errors.value.name && !errors.value.plusOneName
+})
+
 // Methods
 const resetForm = () => {
   form.value = {
     name: '',
     tableId: null,
-    status: 'pending'
+    status: 'pending',
+    dietaryRestrictions: '',
+    hasPlusOne: false,
+    plusOneName: ''
   }
-  errors.value = { name: '' }
+  errors.value = { name: '', plusOneName: '' }
 }
 
 const closeModal = () => {
@@ -119,7 +161,7 @@ const closeModal = () => {
 }
 
 const validateForm = (): boolean => {
-  errors.value = { name: '' }
+  errors.value = { name: '', plusOneName: '' }
   
   if (!form.value.name.trim()) {
     errors.value.name = 'Guest name is required'
@@ -129,6 +171,18 @@ const validateForm = (): boolean => {
   if (form.value.name.trim().length < 2) {
     errors.value.name = 'Guest name must be at least 2 characters'
     return false
+  }
+
+  if (form.value.hasPlusOne) {
+    if (!form.value.plusOneName?.trim()) {
+      errors.value.plusOneName = 'Plus one name is required'
+      return false
+    }
+
+    if (form.value.plusOneName.trim().length < 2) {
+      errors.value.plusOneName = 'Plus one name must be at least 2 characters'
+      return false
+    }
   }
 
   return true
@@ -141,7 +195,10 @@ const handleSubmit = async () => {
   const guestData: GuestFormData = {
     name: form.value.name.trim(),
     tableId: form.value.tableId === null || form.value.tableId === '' ? null : form.value.tableId,
-    status: form.value.status || 'pending'
+    status: form.value.status || 'pending',
+    dietaryRestrictions: form.value.dietaryRestrictions?.trim() || undefined,
+    hasPlusOne: form.value.hasPlusOne,
+    plusOneName: form.value.plusOneName?.trim() || undefined
   }
 
   const success = await weddingStore.addGuest(guestData)
@@ -163,4 +220,39 @@ watch(isOpen, (newValue) => {
     resetForm()
   }
 })
+
+// Watch hasPlusOne to clear plus one name when unchecked
+watch(() => form.value.hasPlusOne, (newValue) => {
+  if (!newValue) {
+    form.value.plusOneName = ''
+    errors.value.plusOneName = ''
+  }
+})
 </script>
+
+<style scoped>
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.slide-down-enter-from {
+  opacity: 0;
+  max-height: 0;
+  transform: translateY(-10px);
+}
+
+.slide-down-leave-to {
+  opacity: 0;
+  max-height: 0;
+  transform: translateY(-10px);
+}
+
+.slide-down-enter-to,
+.slide-down-leave-from {
+  opacity: 1;
+  max-height: 200px;
+  transform: translateY(0);
+}
+</style>

@@ -356,6 +356,9 @@ export const useWeddingStore = defineStore('wedding', () => {
         name: guest.name,
         tableId: guest.table_id,
         status: guest.status as 'confirmed' | 'pending' | 'declined' | undefined,
+        dietaryRestrictions: guest.dietary_restrictions || undefined,
+        isPlusOne: guest.is_plus_one || false,
+        primaryGuestId: guest.primary_guest_id || undefined,
         createdAt: new Date(guest.created_at),
         updatedAt: new Date(guest.updated_at)
       }))
@@ -435,31 +438,81 @@ export const useWeddingStore = defineStore('wedding', () => {
       // Ensure tableId is properly handled - convert empty string, null, or "Unassigned" to null
       const tableId = guestData.tableId === '' || guestData.tableId === null || guestData.tableId === 'Unassigned' ? null : guestData.tableId
 
-      const { data, error: insertError } = await $supabase
+      // Insert primary guest
+      const { data: primaryGuestData, error: insertError } = await $supabase
         .from('guests')
         .insert({
           profile_id: profileId,
           name: guestData.name.trim(),
           table_id: tableId,
-          status: guestData.status || 'pending'
+          status: guestData.status || 'pending',
+          dietary_restrictions: guestData.dietaryRestrictions?.trim() || null,
+          is_plus_one: false,
+          primary_guest_id: null
         })
         .select()
         .single()
 
       if (insertError) throw insertError
 
-      // Add to local state (realtime will also update, but this provides immediate feedback)
+      // Add to local state
       const newGuest: Guest = {
-        id: data.id,
-        name: data.name,
-        tableId: data.table_id,
-        status: data.status as 'confirmed' | 'pending' | 'declined' | undefined,
-        createdAt: new Date(data.created_at),
-        updatedAt: new Date(data.updated_at)
+        id: primaryGuestData.id,
+        name: primaryGuestData.name,
+        tableId: primaryGuestData.table_id,
+        status: primaryGuestData.status as 'confirmed' | 'pending' | 'declined' | undefined,
+        dietaryRestrictions: primaryGuestData.dietary_restrictions || undefined,
+        isPlusOne: false,
+        primaryGuestId: undefined,
+        createdAt: new Date(primaryGuestData.created_at),
+        updatedAt: new Date(primaryGuestData.updated_at)
       }
       
       if (!guests.value) guests.value = []
       guests.value.unshift(newGuest)
+
+      // If plus one is specified, add plus one guest
+      if (guestData.hasPlusOne && guestData.plusOneName?.trim()) {
+        // Check for plus one duplicate
+        if (checkDuplicateGuest(guestData.plusOneName)) {
+          error.value = 'A guest with the plus one name already exists'
+          return false
+        }
+
+        const { data: plusOneData, error: plusOneError } = await $supabase
+          .from('guests')
+          .insert({
+            profile_id: profileId,
+            name: guestData.plusOneName.trim(),
+            table_id: tableId, // Same table as primary guest
+            status: guestData.status || 'pending', // Same status as primary guest
+            dietary_restrictions: null, // Plus one can have their own dietary restrictions set later
+            is_plus_one: true,
+            primary_guest_id: primaryGuestData.id
+          })
+          .select()
+          .single()
+
+        if (plusOneError) {
+          console.error('Error adding plus one guest:', plusOneError)
+          // Don't fail the entire operation, just log the error
+        } else {
+          const newPlusOneGuest: Guest = {
+            id: plusOneData.id,
+            name: plusOneData.name,
+            tableId: plusOneData.table_id,
+            status: plusOneData.status as 'confirmed' | 'pending' | 'declined' | undefined,
+            dietaryRestrictions: undefined,
+            isPlusOne: true,
+            primaryGuestId: primaryGuestData.id,
+            createdAt: new Date(plusOneData.created_at),
+            updatedAt: new Date(plusOneData.updated_at)
+          }
+          
+          guests.value.unshift(newPlusOneGuest)
+        }
+      }
+
       return true
     } catch (err: any) {
       console.error('Error adding guest:', err)
@@ -496,7 +549,8 @@ export const useWeddingStore = defineStore('wedding', () => {
         .update({
           name: guestData.name.trim(),
           table_id: tableId,
-          status: guestData.status || 'pending'
+          status: guestData.status || 'pending',
+          dietary_restrictions: guestData.dietaryRestrictions?.trim() || null
         })
         .eq('id', id)
         .select()
@@ -513,8 +567,32 @@ export const useWeddingStore = defineStore('wedding', () => {
             name: data.name,
             tableId: data.table_id,
             status: data.status as 'confirmed' | 'pending' | 'declined' | undefined,
+            dietaryRestrictions: data.dietary_restrictions || undefined,
+            isPlusOne: data.is_plus_one || false,
+            primaryGuestId: data.primary_guest_id || undefined,
             createdAt: new Date(data.created_at),
             updatedAt: new Date(data.updated_at)
+          }
+        }
+      }
+
+      // If this guest has plus ones, update their table assignments too
+      const plusOneGuests = guests.value.filter(g => g.primaryGuestId === id)
+      if (plusOneGuests.length > 0) {
+        for (const plusOne of plusOneGuests) {
+          await $supabase
+            .from('guests')
+            .update({
+              table_id: tableId,
+              status: guestData.status || 'pending'
+            })
+            .eq('id', plusOne.id)
+
+          // Update local state for plus one
+          const plusOneIndex = guests.value.findIndex(g => g.id === plusOne.id)
+          if (plusOneIndex !== -1) {
+            guests.value[plusOneIndex].tableId = tableId
+            guests.value[plusOneIndex].status = guestData.status as 'confirmed' | 'pending' | 'declined' | undefined
           }
         }
       }
@@ -534,6 +612,36 @@ export const useWeddingStore = defineStore('wedding', () => {
       loading.value = true
       error.value = null
 
+      // Find the guest to delete
+      const guestToDelete = guests.value.find(g => g.id === id)
+      if (!guestToDelete) {
+        error.value = 'Guest not found'
+        return false
+      }
+
+      // If this is a primary guest, also delete their plus ones
+      if (!guestToDelete.isPlusOne) {
+        const plusOneGuests = guests.value.filter(g => g.primaryGuestId === id)
+        
+        for (const plusOne of plusOneGuests) {
+          const { error: deletePlusOneError } = await $supabase
+            .from('guests')
+            .delete()
+            .eq('id', plusOne.id)
+
+          if (deletePlusOneError) {
+            console.error('Error deleting plus one guest:', deletePlusOneError)
+          } else {
+            // Remove from local state
+            const plusOneIndex = guests.value.findIndex(g => g.id === plusOne.id)
+            if (plusOneIndex !== -1) {
+              guests.value.splice(plusOneIndex, 1)
+            }
+          }
+        }
+      }
+
+      // Delete the main guest
       const { error: deleteError } = await $supabase
         .from('guests')
         .delete()
@@ -769,7 +877,9 @@ export const useWeddingStore = defineStore('wedding', () => {
               profile_id: profileId,
               name: row.guestName,
               table_id: table.id,
-              status: 'pending'
+              status: 'pending',
+              is_plus_one: false,
+              primary_guest_id: null
             })
             .select()
             .single()
@@ -781,6 +891,9 @@ export const useWeddingStore = defineStore('wedding', () => {
             name: guestData.name,
             tableId: guestData.table_id,
             status: guestData.status as 'confirmed' | 'pending' | 'declined' | undefined,
+            dietaryRestrictions: undefined,
+            isPlusOne: false,
+            primaryGuestId: undefined,
             createdAt: new Date(guestData.created_at),
             updatedAt: new Date(guestData.updated_at)
           }
@@ -832,6 +945,9 @@ export const useWeddingStore = defineStore('wedding', () => {
               name: payload.new.name,
               tableId: payload.new.table_id,
               status: payload.new.status,
+              dietaryRestrictions: payload.new.dietary_restrictions || undefined,
+              isPlusOne: payload.new.is_plus_one || false,
+              primaryGuestId: payload.new.primary_guest_id || undefined,
               createdAt: new Date(payload.new.created_at),
               updatedAt: new Date(payload.new.updated_at)
             }
@@ -848,6 +964,9 @@ export const useWeddingStore = defineStore('wedding', () => {
                 name: payload.new.name,
                 tableId: payload.new.table_id,
                 status: payload.new.status,
+                dietaryRestrictions: payload.new.dietary_restrictions || undefined,
+                isPlusOne: payload.new.is_plus_one || false,
+                primaryGuestId: payload.new.primary_guest_id || undefined,
                 createdAt: new Date(payload.new.created_at),
                 updatedAt: new Date(payload.new.updated_at)
               }
