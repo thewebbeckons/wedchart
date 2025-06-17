@@ -599,7 +599,7 @@ const handleDrop = async (table: Table, event: DragEvent) => {
   if (!canDropOnTable(table)) {
     $toast.add({
       title: 'Table Full',
-      description: `${table.name} has reached its maximum capacity`,
+      description: `${table?.name || 'This table'} has reached its maximum capacity`,
       color: 'red'
     })
     return
@@ -620,7 +620,7 @@ const handleDrop = async (table: Table, event: DragEvent) => {
   if (success) {
     $toast.add({
       title: 'Guest Assigned',
-      description: `${draggingGuest.value.name} assigned to ${table.name}`,
+      description: `${draggingGuest.value.name} assigned to ${table?.name || 'this table'}`,
       color: 'green'
     })
   }
