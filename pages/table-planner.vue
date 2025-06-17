@@ -76,7 +76,7 @@
                   </UButton>
                 </div>
 
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 h-full">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
                   <div class="p-4 border-b border-gray-200">
                     <!-- Search Filter -->
                     <UInput
