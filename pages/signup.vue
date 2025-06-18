@@ -136,16 +136,16 @@
 
           <div class="flex items-start">
             <UCheckbox
-              v-model="form.acceptTerms"
-              :error="errors.acceptTerms"
+              v-model="form.acceptPrivacy"
+              :error="errors.acceptPrivacy"
               required
             />
             <div class="ml-3 text-sm">
               <label class="text-gray-700">
                 I agree to the
-                <a href="#" class="font-medium text-pink-600 hover:text-pink-500">Terms and Conditions</a>
-                and
-                <a href="#" class="font-medium text-pink-600 hover:text-pink-500">Privacy Policy</a>
+                <NuxtLink to="/privacy-policy" class="font-medium text-pink-600 hover:text-pink-500">
+                  Privacy Policy
+                </NuxtLink>
               </label>
             </div>
           </div>
@@ -195,7 +195,7 @@ const form = ref({
   weddingDate: '',
   password: '',
   confirmPassword: '',
-  acceptTerms: false
+  acceptPrivacy: false
 })
 
 const errors = ref({
@@ -205,7 +205,7 @@ const errors = ref({
   weddingDate: '',
   password: '',
   confirmPassword: '',
-  acceptTerms: ''
+  acceptPrivacy: ''
 })
 
 const showPassword = ref(false)
@@ -235,7 +235,7 @@ const isFormValid = computed(() => {
     form.value.email &&
     form.value.password &&
     form.value.confirmPassword &&
-    form.value.acceptTerms &&
+    form.value.acceptPrivacy &&
     !Object.values(errors.value).some(error => error)
   )
 })
@@ -249,7 +249,7 @@ const validateForm = (): boolean => {
     weddingDate: '',
     password: '',
     confirmPassword: '',
-    acceptTerms: ''
+    acceptPrivacy: ''
   }
   let isValid = true
 
@@ -310,9 +310,9 @@ const validateForm = (): boolean => {
     isValid = false
   }
 
-  // Terms acceptance validation
-  if (!form.value.acceptTerms) {
-    errors.value.acceptTerms = 'You must accept the terms and conditions'
+  // Privacy policy acceptance validation
+  if (!form.value.acceptPrivacy) {
+    errors.value.acceptPrivacy = 'You must accept the privacy policy'
     isValid = false
   }
 

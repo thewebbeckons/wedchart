@@ -248,17 +248,12 @@
 
           <!-- Support -->
           <div>
-            <h4 class="text-lg font-semibold mb-4">Support</h4>
+            <h4 class="text-lg font-semibold mb-4">Legal</h4>
             <ul class="space-y-2">
               <li>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
-                  Help Center
-                </a>
-              </li>
-              <li>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
-                  Contact Us
-                </a>
+                <NuxtLink to="/privacy-policy" class="text-gray-400 hover:text-white transition-colors duration-200">
+                  Privacy Policy
+                </NuxtLink>
               </li>
             </ul>
           </div>
