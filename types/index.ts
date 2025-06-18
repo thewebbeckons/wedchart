@@ -58,6 +58,8 @@ export interface Profile {
   wedding_name?: string
   wedding_date?: string
   guest_list_id?: string
+  email_notifications: boolean
+  marketing_emails: boolean
   created_at: string
   updated_at: string
 }

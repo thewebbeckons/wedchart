@@ -156,7 +156,11 @@
                       <h4 class="text-sm font-medium text-gray-900">Email Notifications</h4>
                       <p class="text-sm text-gray-600">Receive email updates about your account</p>
                     </div>
-                    <UToggle v-model="privacySettings.emailNotifications" />
+                    <UToggle 
+                      v-model="privacySettings.emailNotifications" 
+                      @change="updatePrivacySetting('email_notifications', $event)"
+                      :loading="privacyLoading"
+                    />
                   </div>
 
                   <div class="flex items-center justify-between">
@@ -164,28 +168,39 @@
                       <h4 class="text-sm font-medium text-gray-900">Marketing Communications</h4>
                       <p class="text-sm text-gray-600">Receive promotional emails and updates</p>
                     </div>
-                    <UToggle v-model="privacySettings.marketingEmails" />
+                    <UToggle 
+                      v-model="privacySettings.marketingEmails" 
+                      @change="updatePrivacySetting('marketing_emails', $event)"
+                      :loading="privacyLoading"
+                    />
                   </div>
 
                   <div class="border-t border-gray-200 pt-6">
                     <h4 class="text-md font-medium text-gray-900 mb-4">Data Management</h4>
-                    <div class="space-x-3">
-                      <UButton variant="soft" color="blue" size="sm">
-                        Download My Data
-                      </UButton>
-                      <UButton variant="soft" color="red" size="sm">
-                        Delete Account
-                      </UButton>
+                    <div class="space-y-4">
+                      <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <div class="flex items-start">
+                          <UIcon name="i-heroicons-arrow-down-tray" class="h-5 w-5 text-blue-600 mt-0.5 mr-3 flex-shrink-0" />
+                          <div class="flex-1">
+                            <h5 class="text-sm font-medium text-blue-900 mb-1">Export Your Data</h5>
+                            <p class="text-sm text-blue-800 mb-3">
+                              Download a complete CSV file containing all your wedding guests and their information including names, table assignments, status, and dietary restrictions.
+                            </p>
+                            <UButton
+                              @click="downloadGuestData"
+                              variant="soft"
+                              color="blue"
+                              size="sm"
+                              icon="i-heroicons-arrow-down-tray"
+                              :loading="exportLoading"
+                              :disabled="!hasGuestData"
+                            >
+                              {{ hasGuestData ? 'Download Guest List CSV' : 'No Guest Data Available' }}
+                            </UButton>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-
-                  <div class="flex justify-end">
-                    <UButton
-                      @click="savePrivacySettings"
-                      :loading="privacyLoading"
-                    >
-                      Save Preferences
-                    </UButton>
                   </div>
                 </div>
               </div>
@@ -213,11 +228,13 @@ useHead({
 })
 
 const authStore = useAuthStore()
+const weddingStore = useWeddingStore()
 const { $toast } = useNuxtApp()
 
 // Reactive data
 const activeTab = ref('profile')
 const privacyLoading = ref(false)
+const exportLoading = ref(false)
 
 const profileForm = ref({
   full_name: '',
@@ -254,6 +271,10 @@ const tabs = [
   { id: 'security', name: 'Security', icon: 'i-heroicons-shield-check' },
   { id: 'privacy', name: 'Privacy', icon: 'i-heroicons-eye-slash' }
 ]
+
+const hasGuestData = computed(() => {
+  return weddingStore.guests && weddingStore.guests.length > 0
+})
 
 // Methods
 const updateProfile = async () => {
@@ -359,22 +380,47 @@ const changePassword = async () => {
   }
 }
 
-const savePrivacySettings = async () => {
+const updatePrivacySetting = async (setting: 'email_notifications' | 'marketing_emails', value: boolean) => {
   try {
     privacyLoading.value = true
     
-    // Simulate API call for privacy settings
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    const updates = {
+      [setting]: value
+    }
+
+    const result = await authStore.updateProfile(updates)
+    
+    if (result.success) {
+      $toast.add({
+        title: 'Preference Updated',
+        description: `${setting === 'email_notifications' ? 'Email notifications' : 'Marketing communications'} ${value ? 'enabled' : 'disabled'}`,
+        color: 'green'
+      })
+    } else {
+      // Revert the toggle if update failed
+      if (setting === 'email_notifications') {
+        privacySettings.value.emailNotifications = !value
+      } else {
+        privacySettings.value.marketingEmails = !value
+      }
+      
+      $toast.add({
+        title: 'Error',
+        description: authStore.error || 'Failed to update preference',
+        color: 'red'
+      })
+    }
+  } catch (error) {
+    // Revert the toggle if update failed
+    if (setting === 'email_notifications') {
+      privacySettings.value.emailNotifications = !value
+    } else {
+      privacySettings.value.marketingEmails = !value
+    }
     
     $toast.add({
-      title: 'Success',
-      description: 'Privacy settings saved',
-      color: 'green'
-    })
-  } catch (error) {
-    $toast.add({
       title: 'Error',
-      description: 'Failed to save privacy settings',
+      description: 'Failed to update preference',
       color: 'red'
     })
   } finally {
@@ -382,9 +428,108 @@ const savePrivacySettings = async () => {
   }
 }
 
+const downloadGuestData = async () => {
+  try {
+    exportLoading.value = true
+
+    // Ensure we have guest data
+    if (!weddingStore.guests || weddingStore.guests.length === 0) {
+      $toast.add({
+        title: 'No Data Available',
+        description: 'You have no guests to export',
+        color: 'orange'
+      })
+      return
+    }
+
+    // Prepare CSV headers
+    const headers = [
+      'Guest Name',
+      'Table Assignment',
+      'Status',
+      'Dietary Restrictions',
+      'Is Plus One',
+      'Primary Guest',
+      'Created Date',
+      'Updated Date'
+    ]
+
+    // Prepare CSV data
+    const csvData = weddingStore.guests.map(guest => {
+      // Find table name
+      const table = weddingStore.tables?.find(t => t.id === guest.tableId)
+      const tableName = table?.name || 'Unassigned'
+      
+      // Find primary guest name if this is a plus one
+      const primaryGuest = guest.primaryGuestId 
+        ? weddingStore.guests.find(g => g.id === guest.primaryGuestId)
+        : null
+      const primaryGuestName = primaryGuest?.name || ''
+
+      return [
+        `"${guest.name}"`,
+        `"${tableName}"`,
+        `"${guest.status || 'pending'}"`,
+        `"${guest.dietaryRestrictions || ''}"`,
+        guest.isPlusOne ? 'Yes' : 'No',
+        `"${primaryGuestName}"`,
+        guest.createdAt.toLocaleDateString(),
+        guest.updatedAt.toLocaleDateString()
+      ]
+    })
+
+    // Combine headers and data
+    const csvContent = [
+      headers.join(','),
+      ...csvData.map(row => row.join(','))
+    ].join('\n')
+
+    // Create and download file
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+    const link = document.createElement('a')
+    
+    if (link.download !== undefined) {
+      const url = URL.createObjectURL(blob)
+      link.setAttribute('href', url)
+      
+      // Generate filename with wedding name and date
+      const weddingName = authStore.profile?.wedding_name || 'Wedding'
+      const sanitizedName = weddingName.replace(/[^a-z0-9]/gi, '_').toLowerCase()
+      const timestamp = new Date().toISOString().split('T')[0]
+      link.setAttribute('download', `${sanitizedName}_guest_list_${timestamp}.csv`)
+      
+      link.style.visibility = 'hidden'
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      URL.revokeObjectURL(url)
+      
+      $toast.add({
+        title: 'Export Successful',
+        description: `Guest list exported with ${weddingStore.guests.length} guests`,
+        color: 'green'
+      })
+    }
+  } catch (error) {
+    console.error('Error exporting guest data:', error)
+    $toast.add({
+      title: 'Export Failed',
+      description: 'Failed to export guest data',
+      color: 'red'
+    })
+  } finally {
+    exportLoading.value = false
+  }
+}
+
 // Initialize data
 onMounted(async () => {
   await authStore.initialize()
+  
+  // Initialize wedding data to ensure we have guest information
+  if (authStore.isAuthenticated) {
+    await weddingStore.initializeData()
+  }
   
   // Populate form with current profile data
   if (authStore.profile) {
@@ -393,6 +538,12 @@ onMounted(async () => {
       email: authStore.user?.email || '',
       wedding_name: authStore.profile.wedding_name || '',
       wedding_date: authStore.profile.wedding_date || ''
+    }
+
+    // Set privacy settings from profile
+    privacySettings.value = {
+      emailNotifications: authStore.profile.email_notifications ?? true,
+      marketingEmails: authStore.profile.marketing_emails ?? false
     }
   }
 })
@@ -405,6 +556,12 @@ watch(() => authStore.profile, (newProfile) => {
       email: authStore.user?.email || '',
       wedding_name: newProfile.wedding_name || '',
       wedding_date: newProfile.wedding_date || ''
+    }
+
+    // Update privacy settings from profile
+    privacySettings.value = {
+      emailNotifications: newProfile.email_notifications ?? true,
+      marketingEmails: newProfile.marketing_emails ?? false
     }
   }
 }, { immediate: true })

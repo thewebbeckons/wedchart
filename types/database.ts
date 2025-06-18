@@ -9,6 +9,8 @@ export interface Database {
           wedding_name: string | null
           wedding_date: string | null
           guest_list_id: string | null
+          email_notifications: boolean
+          marketing_emails: boolean
           created_at: string
           updated_at: string
         }
@@ -19,6 +21,8 @@ export interface Database {
           wedding_name?: string | null
           wedding_date?: string | null
           guest_list_id?: string | null
+          email_notifications?: boolean
+          marketing_emails?: boolean
           created_at?: string
           updated_at?: string
         }
@@ -29,6 +33,8 @@ export interface Database {
           wedding_name?: string | null
           wedding_date?: string | null
           guest_list_id?: string | null
+          email_notifications?: boolean
+          marketing_emails?: boolean
           created_at?: string
           updated_at?: string
         }
