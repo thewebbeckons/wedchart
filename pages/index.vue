@@ -54,7 +54,7 @@
               <UButton
                 @click="$router.push('/signup')"
                 size="xl"
-                class="px-8 py-4 text-lg bg-purple-500 hover:bg-purple-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                class="px-8 py-4 text-lg bg-pink-500 hover:bg-pink-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
               >
                 Start Planning Free
               </UButton>
