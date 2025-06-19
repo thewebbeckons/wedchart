@@ -243,10 +243,15 @@
                   Get Started
                 </NuxtLink>
               </li>
+              <li>
+                <NuxtLink to="/help" class="text-gray-400 hover:text-white transition-colors duration-200">
+                  Help Center
+                </NuxtLink>
+              </li>
             </ul>
           </div>
 
-          <!-- Support -->
+          <!-- Legal -->
           <div>
             <h4 class="text-lg font-semibold mb-4">Legal</h4>
             <ul class="space-y-2">
