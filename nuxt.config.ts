@@ -10,7 +10,8 @@ export default defineNuxtConfig({
   ui: {
     colorMode: false,
     notifications: {
-      position: 'top-right'
+      position: 'top-right',
+      timeout: 2000 // Shortened from default 5000ms to 2000ms (2 seconds)
     }
   },  
   css: ['~/assets/css/main.css'],
