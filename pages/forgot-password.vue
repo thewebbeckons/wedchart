@@ -85,7 +85,6 @@
 <script setup>
 definePageMeta({
   layout: false,
-  middleware: 'guest'
 })
 
 const supabase = useSupabaseClient()
