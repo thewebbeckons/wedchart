@@ -1,105 +1,119 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
-      <div>
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Reset your password
-        </h2>
-        <p class="mt-2 text-center text-sm text-gray-600">
-          Enter your email address and we'll send you a link to reset your password.
-        </p>
+  <div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+      <div class="flex justify-center">
+        <UIcon name="i-heroicons-heart" class="h-12 w-12 text-pink-500" />
       </div>
-      <form class="mt-8 space-y-6" @submit.prevent="handleResetRequest">
-        <div>
-          <label for="email" class="sr-only">Email address</label>
-          <input
-            id="email"
-            v-model="email"
-            name="email"
-            type="email"
-            autocomplete="email"
-            required
-            class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Email address"
-          />
-        </div>
+      <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+        Reset your password
+      </h2>
+      <p class="mt-2 text-center text-sm text-gray-600">
+        Enter your email address and we'll send you a link to reset your password.
+      </p>
+    </div>
 
-        <div>
-          <button
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+      <div class="bg-white py-8 px-4 shadow-lg sm:rounded-lg sm:px-10">
+        <!-- Reset Form -->
+        <form @submit.prevent="handleResetRequest" class="space-y-6">
+          <UFormGroup label="Email address" required>
+            <UInput
+              v-model="email"
+              type="email"
+              placeholder="Enter your email address"
+              :error="errors.email"
+              required
+              autocomplete="email"
+              size="lg"
+            />
+          </UFormGroup>
+
+          <UButton
             type="submit"
-            :disabled="loading"
-            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            size="lg"
+            block
+            :loading="loading"
+            :disabled="!email.trim()"
           >
-            <span v-if="loading" class="absolute left-0 inset-y-0 flex items-center pl-3">
-              <Icon name="heroicons:arrow-path-20-solid" class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400 animate-spin" />
-            </span>
-            {{ loading ? 'Sending...' : 'Send reset link' }}
-          </button>
-        </div>
+            Send reset link
+          </UButton>
+        </form>
 
-        <div v-if="message" class="rounded-md bg-green-50 p-4">
-          <div class="flex">
-            <div class="flex-shrink-0">
-              <Icon name="heroicons:check-circle" class="h-5 w-5 text-green-400" />
-            </div>
-            <div class="ml-3">
-              <p class="text-sm font-medium text-green-800">
-                {{ message }}
-              </p>
-            </div>
-          </div>
-        </div>
+        <!-- Success Message -->
+        <UAlert
+          v-if="message"
+          :title="message"
+          color="green"
+          variant="soft"
+          class="mt-4"
+          icon="i-heroicons-check-circle"
+        />
 
-        <div v-if="error" class="rounded-md bg-red-50 p-4">
-          <div class="flex">
-            <div class="flex-shrink-0">
-              <Icon name="heroicons:x-circle" class="h-5 w-5 text-red-400" />
-            </div>
-            <div class="ml-3">
-              <h3 class="text-sm font-medium text-red-800">
-                Unable to send reset email
-              </h3>
-              <div class="mt-2 text-sm text-red-700">
-                <p>{{ error }}</p>
-                <p class="mt-2">
-                  If this problem persists, please contact support or try again later.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <!-- Error Display -->
+        <UAlert
+          v-if="error"
+          :title="error"
+          color="red"
+          variant="soft"
+          class="mt-4"
+          :close-button="{ icon: 'i-heroicons-x-mark-20-solid', color: 'red', variant: 'soft' }"
+          @close="error = ''"
+        />
 
-        <div class="text-center">
+        <!-- Back to Sign In -->
+        <div class="mt-6 text-center">
           <NuxtLink
             to="/login"
-            class="font-medium text-indigo-600 hover:text-indigo-500"
+            class="font-medium text-pink-600 hover:text-pink-500 transition-colors duration-200"
           >
             Back to sign in
           </NuxtLink>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </template>
 
-<script setup>
-definePageMeta({
-  layout: false,
+<script setup lang="ts">
+// Meta
+useHead({
+  title: 'Reset Password - WedChart',
+  meta: [
+    { name: 'description', content: 'Reset your password to access your wedding seating arrangements' }
+  ]
 })
 
 const { $supabase } = useNuxtApp()
 const { $toast } = useNuxtApp()
 
+// Reactive data
 const email = ref('')
 const loading = ref(false)
 const message = ref('')
 const error = ref('')
 
-const handleResetRequest = async () => {
-  if (!email.value) {
-    error.value = 'Please enter your email address'
-    return
+const errors = ref({
+  email: ''
+})
+
+// Methods
+const validateForm = (): boolean => {
+  errors.value = { email: '' }
+  let isValid = true
+
+  if (!email.value.trim()) {
+    errors.value.email = 'Email address is required'
+    isValid = false
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+    errors.value.email = 'Please enter a valid email address'
+    isValid = false
   }
+
+  return isValid
+}
+
+const handleResetRequest = async () => {
+  if (!validateForm()) return
 
   loading.value = true
   error.value = ''
@@ -126,6 +140,12 @@ const handleResetRequest = async () => {
     } else {
       message.value = 'If an account with that email exists, we\'ve sent you a password reset link.'
       email.value = ''
+      
+      $toast.add({
+        title: 'Reset Link Sent',
+        description: 'Check your email for password reset instructions',
+        color: 'green'
+      })
     }
   } catch (err) {
     console.error('Unexpected error:', err)
