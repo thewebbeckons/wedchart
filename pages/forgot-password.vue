@@ -87,7 +87,7 @@ definePageMeta({
   layout: false,
 })
 
-const supabase = useSupabaseClient()
+const { $supabase } = useNuxtApp()
 const { $toast } = useNuxtApp()
 
 const email = ref('')
@@ -106,7 +106,7 @@ const handleResetRequest = async () => {
   message.value = ''
 
   try {
-    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.value, {
+    const { error: resetError } = await $supabase.auth.resetPasswordForEmail(email.value, {
       redirectTo: `${window.location.origin}/reset-password`
     })
 
