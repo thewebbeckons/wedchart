@@ -143,62 +143,33 @@
                 </form>
               </div>
 
-              <!-- Privacy Settings -->
-              <div v-else-if="activeTab === 'privacy'" class="bg-white shadow-sm rounded-lg">
+              <!-- Data Management -->
+              <div v-else-if="activeTab === 'data'" class="bg-white shadow-sm rounded-lg">
                 <div class="px-6 py-4 border-b border-gray-200">
-                  <h3 class="text-lg font-medium text-gray-900">Privacy Settings</h3>
-                  <p class="text-sm text-gray-600 mt-1">Control your privacy and data sharing preferences</p>
+                  <h3 class="text-lg font-medium text-gray-900">Data Management</h3>
+                  <p class="text-sm text-gray-600 mt-1">Export and manage your wedding data</p>
                 </div>
                 
                 <div class="px-6 py-4 space-y-6">
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <h4 class="text-sm font-medium text-gray-900">Email Notifications</h4>
-                      <p class="text-sm text-gray-600">Receive email updates about your account</p>
-                    </div>
-                    <UToggle 
-                      v-model="privacySettings.emailNotifications" 
-                      @change="updatePrivacySetting('email_notifications', $event)"
-                      :loading="privacyLoading"
-                    />
-                  </div>
-
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <h4 class="text-sm font-medium text-gray-900">Marketing Communications</h4>
-                      <p class="text-sm text-gray-600">Receive promotional emails and updates</p>
-                    </div>
-                    <UToggle 
-                      v-model="privacySettings.marketingEmails" 
-                      @change="updatePrivacySetting('marketing_emails', $event)"
-                      :loading="privacyLoading"
-                    />
-                  </div>
-
-                  <div class="border-t border-gray-200 pt-6">
-                    <h4 class="text-md font-medium text-gray-900 mb-4">Data Management</h4>
-                    <div class="space-y-4">
-                      <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <div class="flex items-start">
-                          <UIcon name="i-heroicons-arrow-down-tray" class="h-5 w-5 text-blue-600 mt-0.5 mr-3 flex-shrink-0" />
-                          <div class="flex-1">
-                            <h5 class="text-sm font-medium text-blue-900 mb-1">Export Your Data</h5>
-                            <p class="text-sm text-blue-800 mb-3">
-                              Download a complete CSV file containing all your wedding guests and their information including names, table assignments, status, and dietary restrictions.
-                            </p>
-                            <UButton
-                              @click="downloadGuestData"
-                              variant="soft"
-                              color="blue"
-                              size="sm"
-                              icon="i-heroicons-arrow-down-tray"
-                              :loading="exportLoading"
-                              :disabled="!hasGuestData"
-                            >
-                              {{ hasGuestData ? 'Download Guest List CSV' : 'No Guest Data Available' }}
-                            </UButton>
-                          </div>
-                        </div>
+                  <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <div class="flex items-start">
+                      <UIcon name="i-heroicons-arrow-down-tray" class="h-5 w-5 text-blue-600 mt-0.5 mr-3 flex-shrink-0" />
+                      <div class="flex-1">
+                        <h5 class="text-sm font-medium text-blue-900 mb-1">Export Your Data</h5>
+                        <p class="text-sm text-blue-800 mb-3">
+                          Download a complete CSV file containing all your wedding guests and their information including names, table assignments, status, and dietary restrictions.
+                        </p>
+                        <UButton
+                          @click="downloadGuestData"
+                          variant="soft"
+                          color="blue"
+                          size="sm"
+                          icon="i-heroicons-arrow-down-tray"
+                          :loading="exportLoading"
+                          :disabled="!hasGuestData"
+                        >
+                          {{ hasGuestData ? 'Download Guest List CSV' : 'No Guest Data Available' }}
+                        </UButton>
                       </div>
                     </div>
                   </div>
@@ -233,7 +204,6 @@ const { $toast } = useNuxtApp()
 
 // Reactive data
 const activeTab = ref('profile')
-const privacyLoading = ref(false)
 const exportLoading = ref(false)
 
 const profileForm = ref({
@@ -260,16 +230,11 @@ const passwordErrors = ref({
   confirmPassword: ''
 })
 
-const privacySettings = ref({
-  emailNotifications: true,
-  marketingEmails: false
-})
-
 // Computed
 const tabs = [
   { id: 'profile', name: 'Profile', icon: 'i-heroicons-user' },
   { id: 'security', name: 'Security', icon: 'i-heroicons-shield-check' },
-  { id: 'privacy', name: 'Privacy', icon: 'i-heroicons-eye-slash' }
+  { id: 'data', name: 'Data Management', icon: 'i-heroicons-arrow-down-tray' }
 ]
 
 const hasGuestData = computed(() => {
@@ -377,54 +342,6 @@ const changePassword = async () => {
       description: 'Failed to update password',
       color: 'red'
     })
-  }
-}
-
-const updatePrivacySetting = async (setting: 'email_notifications' | 'marketing_emails', value: boolean) => {
-  try {
-    privacyLoading.value = true
-    
-    const updates = {
-      [setting]: value
-    }
-
-    const result = await authStore.updateProfile(updates)
-    
-    if (result.success) {
-      $toast.add({
-        title: 'Preference Updated',
-        description: `${setting === 'email_notifications' ? 'Email notifications' : 'Marketing communications'} ${value ? 'enabled' : 'disabled'}`,
-        color: 'green'
-      })
-    } else {
-      // Revert the toggle if update failed
-      if (setting === 'email_notifications') {
-        privacySettings.value.emailNotifications = !value
-      } else {
-        privacySettings.value.marketingEmails = !value
-      }
-      
-      $toast.add({
-        title: 'Error',
-        description: authStore.error || 'Failed to update preference',
-        color: 'red'
-      })
-    }
-  } catch (error) {
-    // Revert the toggle if update failed
-    if (setting === 'email_notifications') {
-      privacySettings.value.emailNotifications = !value
-    } else {
-      privacySettings.value.marketingEmails = !value
-    }
-    
-    $toast.add({
-      title: 'Error',
-      description: 'Failed to update preference',
-      color: 'red'
-    })
-  } finally {
-    privacyLoading.value = false
   }
 }
 
@@ -538,12 +455,6 @@ onMounted(async () => {
       wedding_name: authStore.profile.wedding_name || '',
       wedding_date: authStore.profile.wedding_date || ''
     }
-
-    // Set privacy settings from profile
-    privacySettings.value = {
-      emailNotifications: authStore.profile.email_notifications ?? true,
-      marketingEmails: authStore.profile.marketing_emails ?? false
-    }
   }
 })
 
@@ -555,12 +466,6 @@ watch(() => authStore.profile, (newProfile) => {
       email: authStore.user?.email || '',
       wedding_name: newProfile.wedding_name || '',
       wedding_date: newProfile.wedding_date || ''
-    }
-
-    // Update privacy settings from profile
-    privacySettings.value = {
-      emailNotifications: newProfile.email_notifications ?? true,
-      marketingEmails: newProfile.marketing_emails ?? false
     }
   }
 }, { immediate: true })
