@@ -16,6 +16,10 @@ export const useAuthStore = defineStore('auth', () => {
   // Actions
   const { $supabase } = useNuxtApp()
 
+  const clearError = () => {
+    error.value = null
+  }
+
   const signUp = async (
     email: string, 
     password: string, 
@@ -215,7 +219,7 @@ export const useAuthStore = defineStore('auth', () => {
     profile: readonly(profile),
     session: readonly(session),
     loading: readonly(loading),
-    error: readonly(error),
+    error, // Make error writable
 
     // Computed
     isAuthenticated,
@@ -227,6 +231,7 @@ export const useAuthStore = defineStore('auth', () => {
     updatePassword,
     fetchProfile,
     updateProfile,
-    initialize
+    initialize,
+    clearError
   }
 })
