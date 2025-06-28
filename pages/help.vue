@@ -23,6 +23,7 @@
               Back
             </UButton>
             <UButton
+              v-if="authStore.isAuthenticated"
               @click="$router.push('/dashboard')"
               variant="soft"
               color="pink"
@@ -275,5 +276,12 @@ useHead({
     { name: 'description', content: 'Get help with WedChart - Learn how to create wedding seating charts, manage guests, and share your arrangements' },
     { name: 'keywords', content: 'wedding seating chart help, guest list management, table planning guide, WedChart tutorial' }
   ]
+})
+
+const authStore = useAuthStore()
+
+// Initialize auth store to check authentication status
+onMounted(() => {
+  authStore.initialize()
 })
 </script>
