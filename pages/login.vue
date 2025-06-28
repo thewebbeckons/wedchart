@@ -86,7 +86,7 @@
           variant="soft"
           class="mt-4"
           :close-button="{ icon: 'i-heroicons-x-mark-20-solid', color: 'red', variant: 'soft' }"
-          @close="authStore.error = null"
+          @close="clearError"
         />
       </div>
     </div>
@@ -124,6 +124,10 @@ const isFormValid = computed(() => {
 })
 
 // Methods
+const clearError = () => {
+  authStore.error = null
+}
+
 const validateForm = (): boolean => {
   errors.value = { email: '', password: '' }
   let isValid = true
