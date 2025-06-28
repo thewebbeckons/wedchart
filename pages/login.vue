@@ -85,7 +85,8 @@
           color="red"
           variant="soft"
           class="mt-4"
-          :close-button="{ icon: 'i-heroicons-x-mark-20-solid', color: 'red', variant: 'soft' }"          
+          :close-button="{ icon: 'i-heroicons-x-mark-20-solid', color: 'red', variant: 'soft' }"
+          @close="clearError"
         />
       </div>
     </div>
@@ -129,6 +130,8 @@ const clearError = () => {
   if (authStore.$state && authStore.$state.error !== undefined) {
     authStore.$state.error = null
   }
+  errors.value.email = ''
+  errors.value.password = ''
 }
 
 const validateForm = (): boolean => {
