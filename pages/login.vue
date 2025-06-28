@@ -125,7 +125,11 @@ const isFormValid = computed(() => {
 
 // Methods
 const clearError = () => {
-  authStore.error = null
+  // Clear the error by calling signIn with empty credentials to reset the error state
+  // or we can access the internal error ref if available
+  if (authStore.$state && authStore.$state.error !== undefined) {
+    authStore.$state.error = null
+  }
 }
 
 const validateForm = (): boolean => {
