@@ -85,8 +85,7 @@
           color="red"
           variant="soft"
           class="mt-4"
-          :close-button="{ icon: 'i-heroicons-x-mark-20-solid', color: 'red', variant: 'soft' }"
-          @close="clearError"
+          :close-button="{ icon: 'i-heroicons-x-mark-20-solid', color: 'red', variant: 'soft' }"          
         />
       </div>
     </div>
