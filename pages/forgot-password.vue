@@ -57,7 +57,7 @@
           variant="soft"
           class="mt-4"
           :close-button="{ icon: 'i-heroicons-x-mark-20-solid', color: 'red', variant: 'soft' }"
-          @close="error = ''"
+          @close="clearError"
         />
 
         <!-- Back to Sign In -->
@@ -97,6 +97,10 @@ const errors = ref({
 })
 
 // Methods
+const clearError = () => {
+  error.value = ''
+}
+
 const validateForm = (): boolean => {
   errors.value = { email: '' }
   let isValid = true
