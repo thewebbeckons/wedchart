@@ -247,22 +247,13 @@
               <p class="text-gray-700 mb-6 max-w-2xl mx-auto">
                 Can't find the answer you're looking for? We're here to help make your wedding planning as smooth as possible.
               </p>
-              <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <div class="flex justify-center">
                 <a
                   href="mailto:support@wedchart.me?subject=Help Request"
                   class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-200"
                 >
                   <UIcon name="i-heroicons-envelope" class="h-5 w-5 mr-2" />
                   Email Support
-                </a>
-                <a
-                  href="https://coff.ee/667z79qdqdp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-200"
-                >
-                  <UIcon name="i-simple-icons-buymeacoffee" class="h-5 w-5 mr-2 text-yellow-500" />
-                  Buy Us a Coffee
                 </a>
               </div>
             </div>
