@@ -511,7 +511,6 @@ const downloadGuestData = async () => {
       })
     }
   } catch (error) {
-    console.error('Error exporting guest data:', error)
     $toast.add({
       title: 'Export Failed',
       description: 'Failed to export guest data',

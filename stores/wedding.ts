@@ -38,28 +38,21 @@ export const useWeddingStore = defineStore('wedding', () => {
     if (!guests.value || !Array.isArray(guests.value)) return []
     if (!tables.value || !Array.isArray(tables.value)) return []
     
-    console.log('Computing confirmed guests with tables...')
-    console.log('All guests:', guests.value)
-    console.log('All tables:', tables.value)
-    
     const confirmedGuests = guests.value
       .filter(guest => {
         const isConfirmed = guest.status === 'confirmed'
         const hasTable = !!guest.tableId
-        console.log(`Guest ${guest.name}: status=${guest.status}, confirmed=${isConfirmed}, tableId=${guest.tableId}, hasTable=${hasTable}`)
         return isConfirmed && hasTable
       })
       .map(guest => {
         const table = tables.value.find(t => t.id === guest.tableId)
         const tableName = table?.name || 'Unknown Table'
-        console.log(`Mapping guest ${guest.name} to table ${tableName}`)
         return {
           name: guest.name,
           tableName
         }
       })
     
-    console.log('Final confirmed guests with tables:', confirmedGuests)
     return confirmedGuests
   })
 
@@ -126,7 +119,6 @@ export const useWeddingStore = defineStore('wedding', () => {
       const url = `${window.location.origin}/guest-list/${guestListId}/${urlFriendlyName}`
       return { success: true, url }
     } catch (err: any) {
-      console.error('Error generating guest list link:', err)
       error.value = err.message || 'Failed to generate guest list link'
       return { success: false, error: err.message }
     } finally {
@@ -144,16 +136,10 @@ export const useWeddingStore = defineStore('wedding', () => {
         return { success: false, error: 'No profile found' }
       }
 
-      console.log('Starting guest list generation...')
-      console.log('Profile ID:', profileId)
-      console.log('Auth profile:', authStore.profile)
-
       // Get confirmed guests with table assignments
       const confirmedGuests = confirmedGuestsWithTables.value
-      console.log('Confirmed guests for list generation:', confirmedGuests)
 
       if (confirmedGuests.length === 0) {
-        console.log('No confirmed guests found')
         return { success: false, error: 'No confirmed guests with table assignments found' }
       }
 
@@ -163,7 +149,6 @@ export const useWeddingStore = defineStore('wedding', () => {
       if (!targetUniqueId) {
         // Generate new unique ID if profile doesn't have one
         targetUniqueId = generateUniqueId()
-        console.log('Generated new unique ID:', targetUniqueId)
         
         // Update profile with new guest list ID
         const { error: profileUpdateError } = await $supabase
@@ -172,14 +157,10 @@ export const useWeddingStore = defineStore('wedding', () => {
           .eq('id', profileId)
 
         if (profileUpdateError) {
-          console.error('Error updating profile with guest list ID:', profileUpdateError)
           throw profileUpdateError
         }
         
         await authStore.fetchProfile()
-        console.log('Profile updated with new guest list ID')
-      } else {
-        console.log('Using existing guest list ID from profile:', targetUniqueId)
       }
 
       // Prepare guest list data
@@ -191,8 +172,6 @@ export const useWeddingStore = defineStore('wedding', () => {
         guest_data: confirmedGuests
       }
 
-      console.log('Guest list data to insert/update:', guestListData)
-
       // Check if a public guest list already exists with the target unique_id
       const { data: existingList, error: checkError } = await $supabase
         .from('public_guest_lists')
@@ -201,14 +180,10 @@ export const useWeddingStore = defineStore('wedding', () => {
         .maybeSingle()
 
       if (checkError) {
-        console.error('Error checking existing list:', checkError)
         throw checkError
       }
 
-      console.log('Existing list check result:', existingList)
-
       if (existingList) {
-        console.log('Updating existing list with unique_id:', targetUniqueId)
         // Update existing list
         const { error: updateError } = await $supabase
           .from('public_guest_lists')
@@ -220,22 +195,17 @@ export const useWeddingStore = defineStore('wedding', () => {
           .eq('unique_id', targetUniqueId)
 
         if (updateError) {
-          console.error('Error updating existing list:', updateError)
           throw updateError
         }
-        console.log('Successfully updated existing list')
       } else {
-        console.log('Creating new list with unique_id:', targetUniqueId)
         // Create new list with the target unique_id
         const { error: insertError } = await $supabase
           .from('public_guest_lists')
           .insert(guestListData)
 
         if (insertError) {
-          console.error('Error creating new list:', insertError)
           throw insertError
         }
-        console.log('Successfully created new list')
       }
 
       // Generate public URL
@@ -247,7 +217,6 @@ export const useWeddingStore = defineStore('wedding', () => {
         .trim()
 
       const url = `${window.location.origin}/guest-list/${targetUniqueId}/${urlFriendlyName}`
-      console.log('Generated URL:', url)
 
       return {
         success: true,
@@ -257,7 +226,6 @@ export const useWeddingStore = defineStore('wedding', () => {
       }
 
     } catch (err: any) {
-      console.error('Error generating comprehensive guest list:', err)
       error.value = err.message || 'Failed to generate guest list'
       return { success: false, error: err.message }
     } finally {
@@ -267,8 +235,6 @@ export const useWeddingStore = defineStore('wedding', () => {
 
   const getPublicGuestList = async (uniqueId: string): Promise<{ success: boolean; data?: any; error?: string }> => {
     try {
-      console.log('Fetching public guest list with unique ID:', uniqueId)
-      
       const { data, error: fetchError } = await $supabase
         .from('public_guest_lists')
         .select('wedding_name, wedding_date, guest_data')
@@ -276,20 +242,12 @@ export const useWeddingStore = defineStore('wedding', () => {
         .maybeSingle()
 
       if (fetchError) {
-        console.error('Database error:', fetchError)
         return { success: false, error: 'Failed to fetch guest list from database' }
       }
 
-      console.log('Raw database result:', data)
-
       if (!data) {
-        console.log('No guest list found for unique ID:', uniqueId)
         return { success: false, error: 'Guest list not found' }
       }
-
-      console.log('Guest data from database:', data.guest_data)
-      console.log('Guest data type:', typeof data.guest_data)
-      console.log('Guest data length:', Array.isArray(data.guest_data) ? data.guest_data.length : 'not an array')
 
       const result = {
         success: true,
@@ -300,10 +258,8 @@ export const useWeddingStore = defineStore('wedding', () => {
         }
       }
 
-      console.log('Returning result:', result)
       return result
     } catch (err: any) {
-      console.error('Error fetching public guest list:', err)
       return { success: false, error: err.message || 'Failed to fetch guest list' }
     }
   }
@@ -339,8 +295,6 @@ export const useWeddingStore = defineStore('wedding', () => {
         return false
       }
 
-      console.log('Fetching guests for profile:', profileId)
-
       const { data, error: fetchError } = await $supabase
         .from('guests')
         .select('*')
@@ -348,8 +302,6 @@ export const useWeddingStore = defineStore('wedding', () => {
         .order('created_at', { ascending: false })
 
       if (fetchError) throw fetchError
-
-      console.log('Raw guest data from database:', data)
 
       guests.value = (data || []).map(guest => ({
         id: guest.id,
@@ -363,10 +315,8 @@ export const useWeddingStore = defineStore('wedding', () => {
         updatedAt: new Date(guest.updated_at)
       }))
 
-      console.log('Processed guests:', guests.value)
       return true
     } catch (err: any) {
-      console.error('Error fetching guests:', err)
       error.value = err.message || 'Failed to fetch guests'
       return false
     }
@@ -380,8 +330,6 @@ export const useWeddingStore = defineStore('wedding', () => {
         return false
       }
 
-      console.log('Fetching tables for profile:', profileId)
-
       const { data, error: fetchError } = await $supabase
         .from('tables')
         .select('*')
@@ -389,8 +337,6 @@ export const useWeddingStore = defineStore('wedding', () => {
         .order('created_at', { ascending: false })
 
       if (fetchError) throw fetchError
-
-      console.log('Raw table data from database:', data)
 
       tables.value = (data || []).map(table => ({
         id: table.id,
@@ -402,10 +348,8 @@ export const useWeddingStore = defineStore('wedding', () => {
         updatedAt: new Date(table.updated_at)
       }))
 
-      console.log('Processed tables:', tables.value)
       return true
     } catch (err: any) {
-      console.error('Error fetching tables:', err)
       error.value = err.message || 'Failed to fetch tables'
       return false
     }
@@ -494,7 +438,6 @@ export const useWeddingStore = defineStore('wedding', () => {
           .single()
 
         if (plusOneError) {
-          console.error('Error adding plus one guest:', plusOneError)
           // Don't fail the entire operation, just log the error
         } else {
           const newPlusOneGuest: Guest = {
@@ -515,7 +458,6 @@ export const useWeddingStore = defineStore('wedding', () => {
 
       return true
     } catch (err: any) {
-      console.error('Error adding guest:', err)
       error.value = err.message || 'Failed to add guest'
       return false
     } finally {
@@ -599,7 +541,6 @@ export const useWeddingStore = defineStore('wedding', () => {
 
       return true
     } catch (err: any) {
-      console.error('Error updating guest:', err)
       error.value = err.message || 'Failed to update guest'
       return false
     } finally {
@@ -630,7 +571,7 @@ export const useWeddingStore = defineStore('wedding', () => {
             .eq('id', plusOne.id)
 
           if (deletePlusOneError) {
-            console.error('Error deleting plus one guest:', deletePlusOneError)
+            // Continue with deletion even if plus one deletion fails
           } else {
             // Remove from local state
             const plusOneIndex = guests.value.findIndex(g => g.id === plusOne.id)
@@ -659,7 +600,6 @@ export const useWeddingStore = defineStore('wedding', () => {
 
       return true
     } catch (err: any) {
-      console.error('Error deleting guest:', err)
       error.value = err.message || 'Failed to delete guest'
       return false
     } finally {
@@ -724,7 +664,6 @@ export const useWeddingStore = defineStore('wedding', () => {
       tables.value.unshift(newTable)
       return true
     } catch (err: any) {
-      console.error('Error adding table:', err)
       error.value = err.message || 'Failed to add table'
       return false
     } finally {
@@ -763,7 +702,6 @@ export const useWeddingStore = defineStore('wedding', () => {
 
       return true
     } catch (err: any) {
-      console.error('Error deleting table:', err)
       error.value = err.message || 'Failed to delete table'
       return false
     } finally {
@@ -910,7 +848,6 @@ export const useWeddingStore = defineStore('wedding', () => {
 
       return result
     } catch (err: any) {
-      console.error('Import error:', err)
       error.value = err.message || 'Failed to import CSV data'
       throw err
     } finally {
@@ -935,8 +872,6 @@ export const useWeddingStore = defineStore('wedding', () => {
           filter: `profile_id=eq.${profileId}`
         },
         (payload) => {
-          console.log('Guest change received:', payload)
-          
           if (!guests.value) guests.value = []
           
           if (payload.eventType === 'INSERT') {
@@ -988,8 +923,6 @@ export const useWeddingStore = defineStore('wedding', () => {
           filter: `profile_id=eq.${profileId}`
         },
         (payload) => {
-          console.log('Table change received:', payload)
-          
           if (!tables.value) tables.value = []
           
           if (payload.eventType === 'INSERT') {
@@ -1049,8 +982,6 @@ export const useWeddingStore = defineStore('wedding', () => {
         return
       }
 
-      console.log('Initializing wedding data...')
-
       // Initialize arrays if they don't exist
       if (!guests.value) guests.value = []
       if (!tables.value) tables.value = []
@@ -1065,9 +996,7 @@ export const useWeddingStore = defineStore('wedding', () => {
       setupRealtime()
       
       initialized.value = true
-      console.log('Wedding data initialization complete')
     } catch (err: any) {
-      console.error('Error initializing data:', err)
       error.value = err.message || 'Failed to initialize data'
     } finally {
       loading.value = false

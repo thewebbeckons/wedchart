@@ -509,7 +509,6 @@ const removeAllGuestsFromTable = async (table: Table) => {
       })
     }
   } catch (error) {
-    console.error('Error removing guests from table:', error)
     $toast.add({
       title: 'Error',
       description: 'An error occurred while removing guests',
@@ -589,7 +588,6 @@ const handleDrop = async (table: Table, event: DragEvent) => {
 
   // Add null check for table
   if (!table) {
-    console.warn('handleDrop called with null table')
     return
   }
 

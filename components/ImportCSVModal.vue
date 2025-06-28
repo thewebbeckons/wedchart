@@ -369,7 +369,6 @@ const downloadTemplate = () => {
       })
     }
   } catch (error) {
-    console.error('Error downloading template:', error)
     $toast.add({
       title: 'Download Failed',
       description: 'Failed to download CSV template',
@@ -416,7 +415,6 @@ const handleFileSelect = async (event: Event) => {
     step.value = 'preview'
     
   } catch (error) {
-    console.error('Error parsing CSV:', error)
     uploadError.value = error instanceof Error ? error.message : 'Failed to parse CSV file. Please check the format and try again.'
   }
 }
@@ -439,7 +437,6 @@ const handleImport = async () => {
     }
     
   } catch (error) {
-    console.error('Import error:', error)
     $toast.add({
       title: 'Import Failed',
       description: 'Failed to import CSV data',
