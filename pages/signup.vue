@@ -81,7 +81,7 @@
               autocomplete="new-password"
               size="md"
               icon="i-heroicons-lock-closed"
-              class="w-full"
+              
             >
               <template #trailing>
                 <UButton
