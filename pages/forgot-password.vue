@@ -24,13 +24,13 @@
               :error="errors.email"
               required
               autocomplete="email"
-              size="lg"
+              size="md"
             />
           </UFormGroup>
 
           <UButton
             type="submit"
-            size="lg"
+            size="md"
             block
             :loading="loading"
             :disabled="!email.trim()"

@@ -31,6 +31,7 @@
             @click="$router.push('/forgot-password')"
             color="pink"
             block
+            size="md"
           >
             Request New Reset Link
           </UButton>
@@ -47,7 +48,7 @@
                 :error="errors.newPassword"
                 required
                 autocomplete="new-password"
-                size="lg"
+                size="md"
               >
                 <template #trailing>
                   <UButton
@@ -96,7 +97,7 @@
                 :error="errors.confirmPassword"
                 required
                 autocomplete="new-password"
-                size="lg"
+                size="md"
               >
                 <template #trailing>
                   <UButton
@@ -112,7 +113,7 @@
 
             <UButton
               type="submit"
-              size="lg"
+              size="md"
               block
               :loading="updating"
               :disabled="!isFormValid"
@@ -146,6 +147,7 @@
             @click="$router.push('/login')"
             color="pink"
             block
+            size="md"
           >
             Sign In
           </UButton>

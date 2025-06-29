@@ -29,25 +29,12 @@
                 required
                 autocomplete="name"
                 size="md"
-                :ui="{
-                  base: 'relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0',
-                  rounded: 'rounded-md',
-                  placeholder: 'placeholder-gray-400 dark:placeholder-gray-500',
-                  size: {
-                    lg: 'text-lg'
-                  },
-                  gap: {
-                    lg: 'gap-x-3'
-                  },
-                  padding: {
-                    lg: 'px-4 py-3 pr-12'
-                  }
-                }"
+                class="pr-10"
               />
               <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 <UIcon
                   name="i-heroicons-user"
-                  class="h-5 w-5 text-gray-400"
+                  class="h-4 w-4 text-gray-400"
                 />
               </div>
             </div>
@@ -62,26 +49,13 @@
                 :error="errors.email"
                 required
                 autocomplete="email"
-                size="lg"
-                :ui="{
-                  base: 'relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0',
-                  rounded: 'rounded-md',
-                  placeholder: 'placeholder-gray-400 dark:placeholder-gray-500',
-                  size: {
-                    lg: 'text-lg'
-                  },
-                  gap: {
-                    lg: 'gap-x-3'
-                  },
-                  padding: {
-                    lg: 'px-4 py-3 pr-12'
-                  }
-                }"
+                size="md"
+                class="pr-10"
               />
               <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 <UIcon
                   name="i-heroicons-at-symbol"
-                  class="h-5 w-5 text-gray-400"
+                  class="h-4 w-4 text-gray-400"
                 />
               </div>
             </div>
@@ -94,26 +68,13 @@
                 type="text"
                 placeholder="Enter your wedding name"
                 :error="errors.weddingName"
-                size="lg"
-                :ui="{
-                  base: 'relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0',
-                  rounded: 'rounded-md',
-                  placeholder: 'placeholder-gray-400 dark:placeholder-gray-500',
-                  size: {
-                    lg: 'text-lg'
-                  },
-                  gap: {
-                    lg: 'gap-x-3'
-                  },
-                  padding: {
-                    lg: 'px-4 py-3 pr-12'
-                  }
-                }"
+                size="md"
+                class="pr-10"
               />
               <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 <UIcon
                   name="i-heroicons-heart"
-                  class="h-5 w-5 text-gray-400"
+                  class="h-4 w-4 text-gray-400"
                 />
               </div>
             </div>
@@ -126,26 +87,13 @@
                 type="date"
                 placeholder="Select your wedding date"
                 :error="errors.weddingDate"
-                size="lg"
-                :ui="{
-                  base: 'relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0',
-                  rounded: 'rounded-md',
-                  placeholder: 'placeholder-gray-400 dark:placeholder-gray-500',
-                  size: {
-                    lg: 'text-lg'
-                  },
-                  gap: {
-                    lg: 'gap-x-3'
-                  },
-                  padding: {
-                    lg: 'px-4 py-3 pr-12'
-                  }
-                }"
+                size="md"
+                class="pr-10"
               />
               <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 <UIcon
                   name="i-heroicons-calendar-days"
-                  class="h-5 w-5 text-gray-400"
+                  class="h-4 w-4 text-gray-400"
                 />
               </div>
             </div>
@@ -160,21 +108,8 @@
                 :error="errors.password"
                 required
                 autocomplete="new-password"
-                size="lg"
-                :ui="{
-                  base: 'relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0',
-                  rounded: 'rounded-md',
-                  placeholder: 'placeholder-gray-400 dark:placeholder-gray-500',
-                  size: {
-                    lg: 'text-lg'
-                  },
-                  gap: {
-                    lg: 'gap-x-3'
-                  },
-                  padding: {
-                    lg: 'px-4 py-3 pr-12'
-                  }
-                }"
+                size="md"
+                class="pr-10"
               />
               <button
                 type="button"
@@ -187,7 +122,7 @@
               >
                 <UIcon
                   :name="showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
-                  class="h-5 w-5 transition-colors duration-200"
+                  class="h-4 w-4 transition-colors duration-200"
                   :class="{
                     'text-pink-500': showPassword,
                     'text-gray-400 hover:text-gray-600': !showPassword
@@ -233,21 +168,8 @@
                 :error="errors.confirmPassword"
                 required
                 autocomplete="new-password"
-                size="lg"
-                :ui="{
-                  base: 'relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0',
-                  rounded: 'rounded-md',
-                  placeholder: 'placeholder-gray-400 dark:placeholder-gray-500',
-                  size: {
-                    lg: 'text-lg'
-                  },
-                  gap: {
-                    lg: 'gap-x-3'
-                  },
-                  padding: {
-                    lg: 'px-4 py-3 pr-12'
-                  }
-                }"
+                size="md"
+                class="pr-10"
               />
               <button
                 type="button"
@@ -260,7 +182,7 @@
               >
                 <UIcon
                   :name="showConfirmPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
-                  class="h-5 w-5 transition-colors duration-200"
+                  class="h-4 w-4 transition-colors duration-200"
                   :class="{
                     'text-pink-500': showConfirmPassword,
                     'text-gray-400 hover:text-gray-600': !showConfirmPassword
@@ -288,7 +210,7 @@
 
           <UButton
             type="submit"
-            size="lg"
+            size="md"
             block
             :loading="authStore.loading"
             :disabled="!isFormValid"
@@ -556,8 +478,8 @@ button:hover {
 }
 
 /* Custom input styling to ensure consistent appearance */
-.relative input {
-  padding-right: 3rem !important;
+.pr-10 {
+  padding-right: 2.5rem !important;
 }
 
 /* Focus ring adjustments for inputs with icons */
