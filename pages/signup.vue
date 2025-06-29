@@ -92,7 +92,7 @@
                   :icon="showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
                   :aria-label="showPassword ? 'Hide password' : 'Show password'"
                   :aria-pressed="showPassword"
-                  class="cursor-pointer"
+                  :padded="false"
                 />
               </template>
             </UInput>
