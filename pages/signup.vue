@@ -74,28 +74,15 @@
           <UFormGroup label="Password" required>
             <UInput
               v-model="form.password"
-              :type="showPassword ? 'text' : 'password'"
+              type="password"
               placeholder="Create a password"
               :error="errors.password"
               required
               autocomplete="new-password"
               size="md"
               icon="i-heroicons-lock-closed"
-              
-            >
-              <template #trailing>
-                <UButton
-                  @click="togglePasswordVisibility"
-                  variant="soft"
-                  color="gray"
-                  size="sm"
-                  :icon="showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
-                  :aria-label="showPassword ? 'Hide password' : 'Show password'"
-                  :aria-pressed="showPassword"
-                  :padded="false"
-                />
-              </template>
-            </UInput>
+              class="w-full"
+            />
             
             <!-- Password Strength Indicator -->
             <div v-if="form.password" class="mt-2">
@@ -128,7 +115,7 @@
           <UFormGroup label="Confirm password" required>
             <UInput
               v-model="form.confirmPassword"
-              :type="showConfirmPassword ? 'text' : 'password'"
+              type="password"
               placeholder="Confirm your password"
               :error="errors.confirmPassword"
               required
@@ -136,19 +123,7 @@
               size="md"
               icon="i-heroicons-lock-closed"
               class="w-full"
-            >
-              <template #trailing>
-                <UButton
-                  @click="toggleConfirmPasswordVisibility"
-                  variant="soft"
-                  color="gray"
-                  size="sm"
-                  :icon="showConfirmPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
-                  :aria-label="showConfirmPassword ? 'Hide confirm password' : 'Show confirm password'"
-                  :aria-pressed="showConfirmPassword"
-                />
-              </template>
-            </UInput>
+            />
           </UFormGroup>
 
           <div class="flex items-start">
@@ -225,9 +200,6 @@ const errors = ref({
   acceptPrivacy: ''
 })
 
-const showPassword = ref(false)
-const showConfirmPassword = ref(false)
-
 // Computed
 const passwordStrength = computed(() => {
   const password = form.value.password
@@ -258,14 +230,6 @@ const isFormValid = computed(() => {
 })
 
 // Methods
-const togglePasswordVisibility = () => {
-  showPassword.value = !showPassword.value
-}
-
-const toggleConfirmPasswordVisibility = () => {
-  showConfirmPassword.value = !showConfirmPassword.value
-}
-
 const validateForm = (): boolean => {
   errors.value = {
     fullName: '',

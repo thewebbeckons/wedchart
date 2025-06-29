@@ -36,27 +36,15 @@
           <UFormGroup label="Password" required>
             <UInput
               v-model="form.password"
-              :type="showPassword ? 'text' : 'password'"
+              type="password"
               placeholder="Enter your password"
               :error="errors.password"
               required
               autocomplete="current-password"
               size="md"
               icon="i-heroicons-lock-closed"
-              
-            >
-              <template #trailing>
-                <UButton
-                  @click="togglePasswordVisibility"
-                  variant="soft"
-                  color="gray"
-                  size="sm"
-                  :icon="showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
-                  :aria-label="showPassword ? 'Hide password' : 'Show password'"
-                  :aria-pressed="showPassword"
-                />
-              </template>
-            </UInput>
+              class="w-full"
+            />
           </UFormGroup>
 
           <div class="flex items-center justify-between">
@@ -122,8 +110,6 @@ const errors = ref({
   password: ''
 })
 
-const showPassword = ref(false)
-
 // Computed
 const isFormValid = computed(() => {
   return form.value.email && form.value.password && !errors.value.email && !errors.value.password
@@ -132,10 +118,6 @@ const isFormValid = computed(() => {
 // Methods
 const clearError = () => {
   authStore.clearError()
-}
-
-const togglePasswordVisibility = () => {
-  showPassword.value = !showPassword.value
 }
 
 const validateForm = (): boolean => {
