@@ -265,14 +265,19 @@
         </div>
 
         <div class="border-t border-gray-800 mt-8 pt-8">
-          <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
             <!-- Copyright -->
-            <p class="text-gray-400 text-center sm:text-left">
-              © 2024 WedChart. Made with ❤️ for couples planning their perfect day.
-            </p>
+            <div class="text-center md:text-left">
+              <p class="text-gray-400">
+                © 2024 WedChart. Made with ❤️ for couples planning their perfect day.
+              </p>
+            </div>
+            
+            <!-- Spacer for middle column -->
+            <div class="hidden md:block"></div>
             
             <!-- Built with Bolt.new badge -->
-            <div class="flex items-center">
+            <div class="flex justify-center md:justify-end">
               <a 
                 href="https://bolt.new" 
                 class="bolt-badge" 
@@ -613,7 +618,6 @@ const scrollToFeatures = () => {
   display: inline-flex;
   align-items: center;
   padding: 0.5rem;
-  margin: 0.5rem;
   transition: opacity 0.2s ease;
   text-decoration: none;
 }
