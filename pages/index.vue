@@ -217,9 +217,9 @@
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-12">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-6 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-8 gap-8">
           <!-- Brand -->
-          <div class="col-span-1 md:col-span-3">
+          <div class="col-span-1 md:col-span-3 lg:col-span-5">
             <div class="flex items-center mb-4">
               <UIcon name="i-heroicons-heart" class="h-8 w-8 text-pink-400 mr-3" />
               <h3 class="text-2xl font-bold">WedChart</h3>
