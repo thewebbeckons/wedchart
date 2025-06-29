@@ -19,7 +19,7 @@
             aria-label="Built with Bolt.new"
           >
             <img 
-              src="/bolt-badge.svg" 
+              src="/bolt-badge/white_circle_360x360.svg" 
               alt="Built with Bolt.new"
               width="120" 
               height="40"
