@@ -262,6 +262,23 @@
               </li>
             </ul>
           </div>
+          <div>
+            <a 
+                href="https://bolt.new" 
+                class="bolt-badge" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Built with Bolt.new"
+              >
+                <img 
+                  src="/bolt-badge/white_circle_360x360.svg" 
+                  alt="Built with Bolt.new"
+                  width="80" 
+                  height="80"
+                  class="bolt-badge__image"
+                >
+              </a>
+          </div>
         </div>
 
         <div class="border-t border-gray-800 mt-8 pt-8">
@@ -278,21 +295,7 @@
             
             <!-- Built with Bolt.new badge -->
             <div class="flex justify-center md:justify-end">
-              <a 
-                href="https://bolt.new" 
-                class="bolt-badge" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                aria-label="Built with Bolt.new"
-              >
-                <img 
-                  src="/bolt-badge/white_circle_360x360.svg" 
-                  alt="Built with Bolt.new"
-                  width="80" 
-                  height="80"
-                  class="bolt-badge__image"
-                >
-              </a>
+              
             </div>
           </div>
         </div>
