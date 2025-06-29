@@ -80,7 +80,6 @@
                 <li>To create and manage your guest lists and table arrangements</li>
                 <li>To generate shareable guest list links for your wedding</li>
                 <li>To send you important account updates (if you've opted in)</li>
-                )
                 <li>To improve our service and develop new features</li>
                 <li>To provide customer support when needed</li>
               </ul>
