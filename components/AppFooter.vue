@@ -9,7 +9,7 @@
           </p>          
         </div>
 
-        <!-- Right side - Support link -->
+        <!-- Right side - Support link 
         <div class="flex items-center space-x-4">
           <a
             href="https://coff.ee/667z79qdqdp"
@@ -20,7 +20,7 @@
             <UIcon name="i-simple-icons-buymeacoffee" class="h-4 w-4 mr-2 text-yellow-500" />
             Buy me a coffee
           </a>
-        </div>
+        </div>-->
       </div>
     </UContainer>
   </footer>
