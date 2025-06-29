@@ -264,10 +264,32 @@
           </div>
         </div>
 
-        <div class="border-t border-gray-800 mt-8 pt-8 text-center">
-          <p class="text-gray-400">
-            © 2024 WedChart. Made with ❤️ for couples planning their perfect day.
-          </p>
+        <div class="border-t border-gray-800 mt-8 pt-8">
+          <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+            <!-- Copyright -->
+            <p class="text-gray-400 text-center sm:text-left">
+              © 2024 WedChart. Made with ❤️ for couples planning their perfect day.
+            </p>
+            
+            <!-- Built with Bolt.new badge -->
+            <div class="flex items-center">
+              <a 
+                href="https://bolt.new" 
+                class="bolt-badge" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Built with Bolt.new"
+              >
+                <img 
+                  src="/bolt-badge/white_circle_360x360.svg" 
+                  alt="Built with Bolt.new"
+                  width="80" 
+                  height="80"
+                  class="bolt-badge__image"
+                >
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
@@ -584,5 +606,38 @@ const scrollToFeatures = () => {
 .feature-card:focus-within {
   @apply outline-none ring-2 ring-purple-200 ring-offset-2;
   transform: translateY(-2px) scale(1.01);
+}
+
+/* Bolt badge styles */
+.bolt-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  transition: opacity 0.2s ease;
+  text-decoration: none;
+}
+
+.bolt-badge:hover {
+  opacity: 0.8;
+}
+
+.bolt-badge__image {
+  max-width: 80px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Responsive adjustments for bolt badge */
+@media (max-width: 768px) {
+  .bolt-badge__image {
+    max-width: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bolt-badge__image {
+    max-width: 60px;
+  }
 }
 </style>
