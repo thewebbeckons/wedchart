@@ -21,8 +21,8 @@
             <img 
               src="/bolt-badge/white_circle_360x360.svg" 
               alt="Built with Bolt.new"
-              width="120" 
-              height="40"
+              width="80" 
+              height="80"
               class="bolt-badge__image"
             >
           </a>
