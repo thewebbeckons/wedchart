@@ -273,8 +273,8 @@
                 <img 
                   src="/bolt-badge/white_circle_360x360.svg" 
                   alt="Built with Bolt.new"
-                  width="80" 
-                  height="80"
+                  width="90" 
+                  height="90"
                   class="bolt-badge__image"
                 >
               </a>
