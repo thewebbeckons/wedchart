@@ -32,25 +32,49 @@
           </UFormGroup>
 
           <UFormGroup label="Password" required>
-            <UInput
-              v-model="form.password"
-              :type="showPassword ? 'text' : 'password'"
-              placeholder="Enter your password"
-              :error="errors.password"
-              required
-              autocomplete="current-password"
-              size="lg"
-            >
-              <template #trailing>
-                <UButton
-                  @click="showPassword = !showPassword"
-                  variant="soft"
-                  color="gray"
-                  size="sm"
-                  :icon="showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
+            <div class="relative">
+              <UInput
+                v-model="form.password"
+                :type="showPassword ? 'text' : 'password'"
+                placeholder="Enter your password"
+                :error="errors.password"
+                required
+                autocomplete="current-password"
+                size="lg"
+                class="pr-12"
+                :ui="{
+                  base: 'relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0',
+                  rounded: 'rounded-md',
+                  placeholder: 'placeholder-gray-400 dark:placeholder-gray-500',
+                  size: {
+                    lg: 'text-lg'
+                  },
+                  gap: {
+                    lg: 'gap-x-3'
+                  },
+                  padding: {
+                    lg: 'px-4 py-3 pr-12'
+                  }
+                }"
+              />
+              <button
+                type="button"
+                @click="togglePasswordVisibility"
+                class="absolute inset-y-0 right-0 flex items-center pr-3 z-10 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-md transition-colors duration-200 hover:bg-gray-50"
+                :aria-label="showPassword ? 'Hide password' : 'Show password'"
+                :aria-pressed="showPassword"
+                tabindex="0"
+              >
+                <UIcon
+                  :name="showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
+                  class="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors duration-200"
+                  :class="{
+                    'text-pink-500': showPassword,
+                    'text-gray-400': !showPassword
+                  }"
                 />
-              </template>
-            </UInput>
+              </button>
+            </div>
           </UFormGroup>
 
           <div class="flex items-center justify-between">
@@ -128,6 +152,10 @@ const clearError = () => {
   authStore.clearError()
 }
 
+const togglePasswordVisibility = () => {
+  showPassword.value = !showPassword.value
+}
+
 const validateForm = (): boolean => {
   errors.value = { email: '', password: '' }
   let isValid = true
@@ -164,4 +192,70 @@ const handleLogin = async () => {
 onMounted(() => {
   authStore.initialize()
 })
+
+// Handle keyboard events for accessibility
+const handleKeydown = (event: KeyboardEvent) => {
+  // Allow Enter and Space to toggle password visibility when focused on the toggle button
+  if ((event.key === 'Enter' || event.key === ' ') && event.target === document.activeElement) {
+    const target = event.target as HTMLElement
+    if (target.getAttribute('aria-label')?.includes('password')) {
+      event.preventDefault()
+      togglePasswordVisibility()
+    }
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeydown)
+})
 </script>
+
+<style scoped>
+/* Enhanced focus styles for better accessibility */
+.password-toggle-btn:focus {
+  outline: 2px solid #ec4899;
+  outline-offset: 2px;
+}
+
+/* Smooth transitions for icon changes */
+.password-toggle-icon {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Ensure proper positioning and sizing */
+.relative .absolute {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hover effects for better UX */
+.password-toggle-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 0.375rem;
+}
+
+/* Active state styling */
+.password-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .password-toggle-btn {
+    border: 1px solid currentColor;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .password-toggle-icon,
+  .password-toggle-btn {
+    transition: none;
+  }
+}
+</style>
