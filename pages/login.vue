@@ -20,15 +20,37 @@
         <!-- Login Form -->
         <form @submit.prevent="handleLogin" class="space-y-6">
           <UFormGroup label="Email address" required>
-            <UInput
-              v-model="form.email"
-              type="email"
-              placeholder="Enter your email"
-              :error="errors.email"
-              required
-              autocomplete="email"
-              size="lg"
-            />
+            <div class="relative">
+              <UInput
+                v-model="form.email"
+                type="email"
+                placeholder="Enter your email"
+                :error="errors.email"
+                required
+                autocomplete="email"
+                size="lg"
+                :ui="{
+                  base: 'relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0',
+                  rounded: 'rounded-md',
+                  placeholder: 'placeholder-gray-400 dark:placeholder-gray-500',
+                  size: {
+                    lg: 'text-lg'
+                  },
+                  gap: {
+                    lg: 'gap-x-3'
+                  },
+                  padding: {
+                    lg: 'px-4 py-3 pr-12'
+                  }
+                }"
+              />
+              <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <UIcon
+                  name="i-heroicons-at-symbol"
+                  class="h-5 w-5 text-gray-400"
+                />
+              </div>
+            </div>
           </UFormGroup>
 
           <UFormGroup label="Password" required>
@@ -41,7 +63,6 @@
                 required
                 autocomplete="current-password"
                 size="lg"
-                class="pr-12"
                 :ui="{
                   base: 'relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0',
                   rounded: 'rounded-md',
@@ -60,17 +81,18 @@
               <button
                 type="button"
                 @click="togglePasswordVisibility"
-                class="absolute inset-y-0 right-0 flex items-center pr-3 z-10 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-md transition-colors duration-200 hover:bg-gray-50"
+                @keydown="handleToggleKeydown"
+                class="absolute inset-y-0 right-0 flex items-center pr-3 z-10 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-md transition-all duration-200 hover:bg-gray-50 active:scale-95"
                 :aria-label="showPassword ? 'Hide password' : 'Show password'"
                 :aria-pressed="showPassword"
                 tabindex="0"
               >
                 <UIcon
                   :name="showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
-                  class="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors duration-200"
+                  class="h-5 w-5 transition-colors duration-200"
                   :class="{
                     'text-pink-500': showPassword,
-                    'text-gray-400': !showPassword
+                    'text-gray-400 hover:text-gray-600': !showPassword
                   }"
                 />
               </button>
@@ -156,6 +178,13 @@ const togglePasswordVisibility = () => {
   showPassword.value = !showPassword.value
 }
 
+const handleToggleKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault()
+    togglePasswordVisibility()
+  }
+}
+
 const validateForm = (): boolean => {
   errors.value = { email: '', password: '' }
   let isValid = true
@@ -192,41 +221,23 @@ const handleLogin = async () => {
 onMounted(() => {
   authStore.initialize()
 })
-
-// Handle keyboard events for accessibility
-const handleKeydown = (event: KeyboardEvent) => {
-  // Allow Enter and Space to toggle password visibility when focused on the toggle button
-  if ((event.key === 'Enter' || event.key === ' ') && event.target === document.activeElement) {
-    const target = event.target as HTMLElement
-    if (target.getAttribute('aria-label')?.includes('password')) {
-      event.preventDefault()
-      togglePasswordVisibility()
-    }
-  }
-}
-
-onMounted(() => {
-  document.addEventListener('keydown', handleKeydown)
-})
-
-onUnmounted(() => {
-  document.removeEventListener('keydown', handleKeydown)
-})
 </script>
 
 <style scoped>
 /* Enhanced focus styles for better accessibility */
-.password-toggle-btn:focus {
+button:focus {
   outline: 2px solid #ec4899;
   outline-offset: 2px;
 }
 
-/* Smooth transitions for icon changes */
-.password-toggle-icon {
-  transition: all 0.2s ease-in-out;
+/* Smooth transitions for all interactive elements */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
 }
 
-/* Ensure proper positioning and sizing */
+/* Ensure proper positioning and sizing for icons */
 .relative .absolute {
   display: flex;
   align-items: center;
@@ -234,28 +245,47 @@ onUnmounted(() => {
 }
 
 /* Hover effects for better UX */
-.password-toggle-btn:hover {
+button:hover {
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 0.375rem;
 }
 
 /* Active state styling */
-.password-toggle-btn:active {
+.active\:scale-95:active {
   transform: scale(0.95);
 }
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
-  .password-toggle-btn {
+  button {
     border: 1px solid currentColor;
+  }
+  
+  .relative .absolute {
+    border: 1px solid transparent;
   }
 }
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  .password-toggle-icon,
-  .password-toggle-btn {
+  .transition-all,
+  button {
     transition: none;
   }
+}
+
+/* Ensure icons don't interfere with input interaction */
+.pointer-events-none {
+  pointer-events: none;
+}
+
+/* Custom input styling to ensure consistent appearance */
+.relative input {
+  padding-right: 3rem !important;
+}
+
+/* Focus ring adjustments for inputs with icons */
+.relative input:focus {
+  box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.2);
 }
 </style>

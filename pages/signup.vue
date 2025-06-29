@@ -20,69 +20,181 @@
         <!-- Registration Form -->
         <form @submit.prevent="handleSignup" class="space-y-6">
           <UFormGroup label="Full name" required>
-            <UInput
-              v-model="form.fullName"
-              type="text"
-              placeholder="Enter your full name"
-              :error="errors.fullName"
-              required
-              autocomplete="name"
-              size="lg"
-            />
+            <div class="relative">
+              <UInput
+                v-model="form.fullName"
+                type="text"
+                placeholder="Enter your full name"
+                :error="errors.fullName"
+                required
+                autocomplete="name"
+                size="lg"
+                :ui="{
+                  base: 'relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0',
+                  rounded: 'rounded-md',
+                  placeholder: 'placeholder-gray-400 dark:placeholder-gray-500',
+                  size: {
+                    lg: 'text-lg'
+                  },
+                  gap: {
+                    lg: 'gap-x-3'
+                  },
+                  padding: {
+                    lg: 'px-4 py-3 pr-12'
+                  }
+                }"
+              />
+              <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <UIcon
+                  name="i-heroicons-user"
+                  class="h-5 w-5 text-gray-400"
+                />
+              </div>
+            </div>
           </UFormGroup>
 
           <UFormGroup label="Email address" required>
-            <UInput
-              v-model="form.email"
-              type="email"
-              placeholder="Enter your email"
-              :error="errors.email"
-              required
-              autocomplete="email"
-              size="lg"
-            />
+            <div class="relative">
+              <UInput
+                v-model="form.email"
+                type="email"
+                placeholder="Enter your email"
+                :error="errors.email"
+                required
+                autocomplete="email"
+                size="lg"
+                :ui="{
+                  base: 'relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0',
+                  rounded: 'rounded-md',
+                  placeholder: 'placeholder-gray-400 dark:placeholder-gray-500',
+                  size: {
+                    lg: 'text-lg'
+                  },
+                  gap: {
+                    lg: 'gap-x-3'
+                  },
+                  padding: {
+                    lg: 'px-4 py-3 pr-12'
+                  }
+                }"
+              />
+              <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <UIcon
+                  name="i-heroicons-at-symbol"
+                  class="h-5 w-5 text-gray-400"
+                />
+              </div>
+            </div>
           </UFormGroup>
 
           <UFormGroup label="Wedding name" help="e.g., 'Sarah & John's Wedding'">
-            <UInput
-              v-model="form.weddingName"
-              type="text"
-              placeholder="Enter your wedding name"
-              :error="errors.weddingName"
-              size="lg"
-            />
+            <div class="relative">
+              <UInput
+                v-model="form.weddingName"
+                type="text"
+                placeholder="Enter your wedding name"
+                :error="errors.weddingName"
+                size="lg"
+                :ui="{
+                  base: 'relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0',
+                  rounded: 'rounded-md',
+                  placeholder: 'placeholder-gray-400 dark:placeholder-gray-500',
+                  size: {
+                    lg: 'text-lg'
+                  },
+                  gap: {
+                    lg: 'gap-x-3'
+                  },
+                  padding: {
+                    lg: 'px-4 py-3 pr-12'
+                  }
+                }"
+              />
+              <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <UIcon
+                  name="i-heroicons-heart"
+                  class="h-5 w-5 text-gray-400"
+                />
+              </div>
+            </div>
           </UFormGroup>
 
           <UFormGroup label="Wedding date" help="When is your special day?">
-            <UInput
-              v-model="form.weddingDate"
-              type="date"
-              placeholder="Select your wedding date"
-              :error="errors.weddingDate"
-              size="lg"
-            />
+            <div class="relative">
+              <UInput
+                v-model="form.weddingDate"
+                type="date"
+                placeholder="Select your wedding date"
+                :error="errors.weddingDate"
+                size="lg"
+                :ui="{
+                  base: 'relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0',
+                  rounded: 'rounded-md',
+                  placeholder: 'placeholder-gray-400 dark:placeholder-gray-500',
+                  size: {
+                    lg: 'text-lg'
+                  },
+                  gap: {
+                    lg: 'gap-x-3'
+                  },
+                  padding: {
+                    lg: 'px-4 py-3 pr-12'
+                  }
+                }"
+              />
+              <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <UIcon
+                  name="i-heroicons-calendar-days"
+                  class="h-5 w-5 text-gray-400"
+                />
+              </div>
+            </div>
           </UFormGroup>
 
           <UFormGroup label="Password" required>
-            <UInput
-              v-model="form.password"
-              :type="showPassword ? 'text' : 'password'"
-              placeholder="Create a password"
-              :error="errors.password"
-              required
-              autocomplete="new-password"
-              size="lg"
-            >
-              <template #trailing>
-                <UButton
-                  @click="showPassword = !showPassword"
-                  variant="soft"
-                  color="gray"
-                  size="sm"
-                  :icon="showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
+            <div class="relative">
+              <UInput
+                v-model="form.password"
+                :type="showPassword ? 'text' : 'password'"
+                placeholder="Create a password"
+                :error="errors.password"
+                required
+                autocomplete="new-password"
+                size="lg"
+                :ui="{
+                  base: 'relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0',
+                  rounded: 'rounded-md',
+                  placeholder: 'placeholder-gray-400 dark:placeholder-gray-500',
+                  size: {
+                    lg: 'text-lg'
+                  },
+                  gap: {
+                    lg: 'gap-x-3'
+                  },
+                  padding: {
+                    lg: 'px-4 py-3 pr-12'
+                  }
+                }"
+              />
+              <button
+                type="button"
+                @click="togglePasswordVisibility"
+                @keydown="handleToggleKeydown"
+                class="absolute inset-y-0 right-0 flex items-center pr-3 z-10 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-md transition-all duration-200 hover:bg-gray-50 active:scale-95"
+                :aria-label="showPassword ? 'Hide password' : 'Show password'"
+                :aria-pressed="showPassword"
+                tabindex="0"
+              >
+                <UIcon
+                  :name="showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
+                  class="h-5 w-5 transition-colors duration-200"
+                  :class="{
+                    'text-pink-500': showPassword,
+                    'text-gray-400 hover:text-gray-600': !showPassword
+                  }"
                 />
-              </template>
-            </UInput>
+              </button>
+            </div>
             
             <!-- Password Strength Indicator -->
             <div v-if="form.password" class="mt-2">
@@ -113,25 +225,49 @@
           </UFormGroup>
 
           <UFormGroup label="Confirm password" required>
-            <UInput
-              v-model="form.confirmPassword"
-              :type="showConfirmPassword ? 'text' : 'password'"
-              placeholder="Confirm your password"
-              :error="errors.confirmPassword"
-              required
-              autocomplete="new-password"
-              size="lg"
-            >
-              <template #trailing>
-                <UButton
-                  @click="showConfirmPassword = !showConfirmPassword"
-                  variant="soft"
-                  color="gray"
-                  size="sm"
-                  :icon="showConfirmPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
+            <div class="relative">
+              <UInput
+                v-model="form.confirmPassword"
+                :type="showConfirmPassword ? 'text' : 'password'"
+                placeholder="Confirm your password"
+                :error="errors.confirmPassword"
+                required
+                autocomplete="new-password"
+                size="lg"
+                :ui="{
+                  base: 'relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0',
+                  rounded: 'rounded-md',
+                  placeholder: 'placeholder-gray-400 dark:placeholder-gray-500',
+                  size: {
+                    lg: 'text-lg'
+                  },
+                  gap: {
+                    lg: 'gap-x-3'
+                  },
+                  padding: {
+                    lg: 'px-4 py-3 pr-12'
+                  }
+                }"
+              />
+              <button
+                type="button"
+                @click="toggleConfirmPasswordVisibility"
+                @keydown="handleConfirmToggleKeydown"
+                class="absolute inset-y-0 right-0 flex items-center pr-3 z-10 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-md transition-all duration-200 hover:bg-gray-50 active:scale-95"
+                :aria-label="showConfirmPassword ? 'Hide confirm password' : 'Show confirm password'"
+                :aria-pressed="showConfirmPassword"
+                tabindex="0"
+              >
+                <UIcon
+                  :name="showConfirmPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
+                  class="h-5 w-5 transition-colors duration-200"
+                  :class="{
+                    'text-pink-500': showConfirmPassword,
+                    'text-gray-400 hover:text-gray-600': !showConfirmPassword
+                  }"
                 />
-              </template>
-            </UInput>
+              </button>
+            </div>
           </UFormGroup>
 
           <div class="flex items-start">
@@ -241,6 +377,28 @@ const isFormValid = computed(() => {
 })
 
 // Methods
+const togglePasswordVisibility = () => {
+  showPassword.value = !showPassword.value
+}
+
+const toggleConfirmPasswordVisibility = () => {
+  showConfirmPassword.value = !showConfirmPassword.value
+}
+
+const handleToggleKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault()
+    togglePasswordVisibility()
+  }
+}
+
+const handleConfirmToggleKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault()
+    toggleConfirmPasswordVisibility()
+  }
+}
+
 const validateForm = (): boolean => {
   errors.value = {
     fullName: '',
@@ -340,3 +498,70 @@ onMounted(() => {
   authStore.initialize()
 })
 </script>
+
+<style scoped>
+/* Enhanced focus styles for better accessibility */
+button:focus {
+  outline: 2px solid #ec4899;
+  outline-offset: 2px;
+}
+
+/* Smooth transitions for all interactive elements */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* Ensure proper positioning and sizing for icons */
+.relative .absolute {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hover effects for better UX */
+button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 0.375rem;
+}
+
+/* Active state styling */
+.active\:scale-95:active {
+  transform: scale(0.95);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  button {
+    border: 1px solid currentColor;
+  }
+  
+  .relative .absolute {
+    border: 1px solid transparent;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .transition-all,
+  button {
+    transition: none;
+  }
+}
+
+/* Ensure icons don't interfere with input interaction */
+.pointer-events-none {
+  pointer-events: none;
+}
+
+/* Custom input styling to ensure consistent appearance */
+.relative input {
+  padding-right: 3rem !important;
+}
+
+/* Focus ring adjustments for inputs with icons */
+.relative input:focus {
+  box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.2);
+}
+</style>
