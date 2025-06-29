@@ -282,21 +282,13 @@
         </div>
 
         <div class="border-t border-gray-800 mt-8 pt-8">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+          <div class="grid grid-cols-1 gap-4 items-center">
             <!-- Copyright -->
             <div class="text-center md:text-left">
               <p class="text-gray-400">
                 © 2024 WedChart. Made with ❤️ for couples planning their perfect day.
               </p>
-            </div>
-            
-            <!-- Spacer for middle column -->
-            <div class="hidden md:block"></div>
-            
-            <!-- Built with Bolt.new badge -->
-            <div class="flex justify-center md:justify-end">
-              
-            </div>
+            </div>           
           </div>
         </div>
       </div>
