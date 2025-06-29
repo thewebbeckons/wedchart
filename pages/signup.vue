@@ -28,7 +28,7 @@
                 :error="errors.fullName"
                 required
                 autocomplete="name"
-                size="lg"
+                size="md"
                 :ui="{
                   base: 'relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0',
                   rounded: 'rounded-md',
