@@ -9,22 +9,16 @@
           </p>          
         </div>
 
-        <!-- Right side - Built with Bolt.new badge -->
+        <!-- Right side - Support link -->
         <div class="flex items-center space-x-4">
-          <a 
-            href="https://bolt.new" 
-            class="bolt-badge" 
-            target="_blank" 
+          <a
+            href="https://coff.ee/667z79qdqdp"
+            target="_blank"
             rel="noopener noreferrer"
-            aria-label="Built with Bolt.new"
+            class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors duration-200 rounded-md hover:bg-gray-100"
           >
-            <img 
-              src="/bolt-badge/white_circle_360x360.svg" 
-              alt="Built with Bolt.new"
-              width="80" 
-              height="80"
-              class="bolt-badge__image"
-            >
+            <UIcon name="i-simple-icons-buymeacoffee" class="h-4 w-4 mr-2 text-yellow-500" />
+            Buy me a coffee
           </a>
         </div>
       </div>
@@ -35,37 +29,3 @@
 <script setup lang="ts">
 // Footer component for consistent layout
 </script>
-
-<style scoped>
-.bolt-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.5rem;
-  margin: 0.5rem;
-  transition: opacity 0.2s ease;
-  text-decoration: none;
-}
-
-.bolt-badge:hover {
-  opacity: 0.8;
-}
-
-.bolt-badge__image {
-  max-width: 120px;
-  height: auto;
-  object-fit: contain;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .bolt-badge__image {
-    max-width: 100px;
-  }
-}
-
-@media (max-width: 480px) {
-  .bolt-badge__image {
-    max-width: 80px;
-  }
-}
-</style>
