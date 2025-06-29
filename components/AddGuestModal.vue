@@ -84,7 +84,7 @@
           </UButton>
           <UButton
             type="submit"
-            :loading="weddingStore.loading"
+            :loading="loading"
             :disabled="!isFormValid"
           >
             {{ form.hasPlusOne ? 'Add Guests' : 'Add Guest' }}
@@ -108,6 +108,9 @@ const emit = defineEmits<{
 
 const { $toast } = useNuxtApp()
 const weddingStore = useWeddingStore()
+
+// Local loading state to prevent conflicts
+const loading = ref(false)
 
 // Reactive data
 const form = ref<GuestFormData>({
@@ -158,6 +161,7 @@ const resetForm = () => {
 const closeModal = () => {
   isOpen.value = false
   resetForm()
+  loading.value = false // Clear local loading state
 }
 
 const validateForm = (): boolean => {
@@ -191,26 +195,38 @@ const validateForm = (): boolean => {
 const handleSubmit = async () => {
   if (!validateForm()) return
 
-  // Ensure tableId is properly set to null for "Unassigned"
-  const guestData: GuestFormData = {
-    name: form.value.name.trim(),
-    tableId: form.value.tableId === null || form.value.tableId === '' ? null : form.value.tableId,
-    status: form.value.status || 'pending',
-    dietaryRestrictions: form.value.dietaryRestrictions?.trim() || undefined,
-    hasPlusOne: form.value.hasPlusOne,
-    plusOneName: form.value.plusOneName?.trim() || undefined
-  }
+  try {
+    loading.value = true
 
-  const success = await weddingStore.addGuest(guestData)
-  
-  if (success) {
-    closeModal()
-  } else {
+    // Ensure tableId is properly set to null for "Unassigned"
+    const guestData: GuestFormData = {
+      name: form.value.name.trim(),
+      tableId: form.value.tableId === null || form.value.tableId === '' ? null : form.value.tableId,
+      status: form.value.status || 'pending',
+      dietaryRestrictions: form.value.dietaryRestrictions?.trim() || undefined,
+      hasPlusOne: form.value.hasPlusOne,
+      plusOneName: form.value.plusOneName?.trim() || undefined
+    }
+
+    const success = await weddingStore.addGuest(guestData)
+    
+    if (success) {
+      closeModal()
+    } else {
+      $toast.add({
+        title: 'Error',
+        description: weddingStore.error || 'Failed to add guest',
+        color: 'red'
+      })
+    }
+  } catch (error) {
     $toast.add({
       title: 'Error',
-      description: weddingStore.error || 'Failed to add guest',
+      description: 'An unexpected error occurred',
       color: 'red'
     })
+  } finally {
+    loading.value = false
   }
 }
 
@@ -218,6 +234,9 @@ const handleSubmit = async () => {
 watch(isOpen, (newValue) => {
   if (newValue) {
     resetForm()
+    loading.value = false // Clear loading state when opening
+  } else {
+    loading.value = false // Clear loading state when closing
   }
 })
 
@@ -227,6 +246,11 @@ watch(() => form.value.hasPlusOne, (newValue) => {
     form.value.plusOneName = ''
     errors.value.plusOneName = ''
   }
+})
+
+// Clear loading state on unmount
+onUnmounted(() => {
+  loading.value = false
 })
 </script>
 

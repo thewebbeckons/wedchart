@@ -73,6 +73,14 @@ export const useWeddingStore = defineStore('wedding', () => {
     return result
   }
 
+  const clearLoading = () => {
+    loading.value = false
+  }
+
+  const clearError = () => {
+    error.value = null
+  }
+
   const generateGuestListLink = async (): Promise<{ success: boolean; url?: string; error?: string }> => {
     try {
       loading.value = true
@@ -1012,9 +1020,16 @@ export const useWeddingStore = defineStore('wedding', () => {
     cleanupRealtime()
   }
 
+  // Add cleanup method
+  const cleanup = () => {
+    loading.value = false
+    error.value = null
+    cleanupRealtime()
+  }
+
   // Cleanup on unmount
   onUnmounted(() => {
-    cleanupRealtime()
+    cleanup()
   })
 
   return {
@@ -1044,6 +1059,9 @@ export const useWeddingStore = defineStore('wedding', () => {
     fetchTables,
     generateGuestListLink,
     generateComprehensiveGuestList,
-    getPublicGuestList
+    getPublicGuestList,
+    clearLoading,
+    clearError,
+    cleanup
   }
 })

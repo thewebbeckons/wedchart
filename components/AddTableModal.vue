@@ -70,6 +70,9 @@ const emit = defineEmits<{
 const { $toast } = useNuxtApp()
 const weddingStore = useWeddingStore()
 
+// Local loading state to prevent conflicts
+const loading = ref(false)
+
 // Reactive data
 const form = ref<TableFormData>({
   name: '',
@@ -86,8 +89,6 @@ const isOpen = computed({
   set: (value) => emit('update:modelValue', value)
 })
 
-const { loading } = storeToRefs(weddingStore)
-
 // Methods
 const resetForm = () => {
   form.value = {
@@ -100,6 +101,7 @@ const resetForm = () => {
 const closeModal = () => {
   isOpen.value = false
   resetForm()
+  loading.value = false // Clear local loading state
 }
 
 const validateForm = (): boolean => {
@@ -116,21 +118,33 @@ const validateForm = (): boolean => {
 const handleSubmit = async () => {
   if (!validateForm()) return
 
-  const success = await weddingStore.addTable(form.value)
-  
-  if (success) {
-    $toast.add({
-      title: 'Success',
-      description: 'Table added successfully',
-      color: 'green'
-    })
-    closeModal()
-  } else {
+  try {
+    loading.value = true
+
+    const success = await weddingStore.addTable(form.value)
+    
+    if (success) {
+      $toast.add({
+        title: 'Success',
+        description: 'Table added successfully',
+        color: 'green'
+      })
+      closeModal()
+    } else {
+      $toast.add({
+        title: 'Error',
+        description: weddingStore.error || 'Failed to add table',
+        color: 'red'
+      })
+    }
+  } catch (error) {
     $toast.add({
       title: 'Error',
-      description: weddingStore.error || 'Failed to add table',
+      description: 'An unexpected error occurred',
       color: 'red'
     })
+  } finally {
+    loading.value = false
   }
 }
 
@@ -138,6 +152,14 @@ const handleSubmit = async () => {
 watch(isOpen, (newValue) => {
   if (newValue) {
     resetForm()
+    loading.value = false // Clear loading state when opening
+  } else {
+    loading.value = false // Clear loading state when closing
   }
+})
+
+// Clear loading state on unmount
+onUnmounted(() => {
+  loading.value = false
 })
 </script>

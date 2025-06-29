@@ -20,6 +20,10 @@ export const useAuthStore = defineStore('auth', () => {
     error.value = null
   }
 
+  const clearLoading = () => {
+    loading.value = false
+  }
+
   const signUp = async (
     email: string, 
     password: string, 
@@ -213,6 +217,12 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  // Add cleanup method
+  const cleanup = () => {
+    loading.value = false
+    error.value = null
+  }
+
   return {
     // State
     user: readonly(user),
@@ -232,6 +242,8 @@ export const useAuthStore = defineStore('auth', () => {
     fetchProfile,
     updateProfile,
     initialize,
-    clearError
+    clearError,
+    clearLoading,
+    cleanup
   }
 })

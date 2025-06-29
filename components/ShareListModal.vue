@@ -461,6 +461,10 @@ watch(showQRModal, (isOpen) => {
 // Watch for modal opening to initialize data
 watch(isOpen, (newValue) => {
   if (newValue) {
+    // Clear any existing loading states when modal opens
+    weddingStore.clearLoading()
+    regenerating.value = false
+    
     // Initialize with existing guest list ID if available
     if (authStore.profile?.guest_list_id) {
       const weddingName = authStore.profile.wedding_name || 'wedding'
@@ -480,6 +484,10 @@ watch(isOpen, (newValue) => {
         }
       }
     }
+  } else {
+    // Clear loading states when modal closes
+    weddingStore.clearLoading()
+    regenerating.value = false
   }
 })
 
@@ -509,5 +517,8 @@ onMounted(() => {
 
 onUnmounted(() => {
   document.removeEventListener('keydown', handleKeydown)
+  // Clear loading states on unmount
+  weddingStore.clearLoading()
+  regenerating.value = false
 })
 </script>

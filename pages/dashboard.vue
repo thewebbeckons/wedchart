@@ -180,6 +180,12 @@ onMounted(async () => {
     weddingStore.initializeData()
   }
 })
+
+// Clear loading states when navigating away
+onBeforeUnmount(() => {
+  authStore.clearLoading()
+  weddingStore.clearLoading()
+})
 </script>
 
 <style scoped>
